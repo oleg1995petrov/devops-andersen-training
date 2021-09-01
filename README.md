@@ -13,5 +13,5 @@ Hi there! My name is **Aleh**. I am 26 years old. I am from **Belarus**. I gradu
 
 ## 3 things what I expect from this course:
 * Firstly, I expect knowledge that I will obtain to be actual and useful for my future achievements. 
-* Secondly, I expect I will successfully master a basic program for DevOps specialist and I will have one chance more to get an interesting job.
+* Secondly, I expect I will successfully master a basic program for DevOps specialist and I will have one more chance to get an interesting job.
 * Thirdly, of course, I expect to receive a job offer from Andersen if I graduate the course **excellently**.
