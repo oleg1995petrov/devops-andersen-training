@@ -1,0 +1,11 @@
+---
+
+- name: Deploy configuration
+  hosts: all
+  become: yes
+  become_method: su
+  roles:
+    - sshd
+    - common
+    - gunicorn
+    - nginx

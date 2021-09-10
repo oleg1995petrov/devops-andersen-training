@@ -1,0 +1,7 @@
+---
+
+- name: Reload sshd
+  systemd:
+    name: sshd
+    state: reloaded
+    daemon_reload: yes

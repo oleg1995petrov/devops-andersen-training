@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn systemd service 
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory={{ workdir }}
+ExecStart=/usr/local/bin/gunicorn -w 3 -b unix:{{ workdir }}/{{ project_name }}.sock wsgi:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

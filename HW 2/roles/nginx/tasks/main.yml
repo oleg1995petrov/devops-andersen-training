@@ -1,0 +1,25 @@
+---
+
+- name: Ensure the default nginx conf is removed
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Create nginx conf
+  template:
+    src: 'nginx.conf.j2'
+    dest: '/etc/nginx/sites-available/{{ project_name }}'
+
+- name: Ensure the conf is enabled
+  file: 
+    src: '/etc/nginx/sites-available/{{ project_name }}'
+    dest: '/etc/nginx/sites-enabled/{{ project_name }}'
+    state: link
+  notify: Reload nginx
+
+- name: Ensure nginx is started
+  systemd: 
+    name: nginx.service
+    state: reloaded
+    enabled: yes
+    daemon_reload: yes  

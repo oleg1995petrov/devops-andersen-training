@@ -1,0 +1,11 @@
+server {
+    listen 80          default_server;
+    server_name        {{ host_name }} www.{{ host_name }};
+
+    access_log         /var/log/nginx/{{ project_name }}.access.log;
+    error_log          /var/log/nginx/{{ project_name }}.error.log error;
+
+    location / {
+        proxy_pass http://unix:{{ workdir }}/{{ project_name}}.sock;
+    }
+}
