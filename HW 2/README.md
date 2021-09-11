@@ -1,4 +1,4 @@
-## Homework 2 overview
+# Homework 2 overview
 
 1. Need to create and deploy to virtual machine (hereinafter VM) service is written in [Flask][flask] via Ansible playbook. 
     * The service listens at least on port 80 (443 as an option) 
