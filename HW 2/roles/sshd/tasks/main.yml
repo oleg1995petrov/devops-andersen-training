@@ -1,6 +1,6 @@
 ---
 
-- name: Paste custom sshd_config
+- name: Paste a custom sshd_config
   copy:
     src: sshd_config
     dest: /etc/ssh/sshd_config
