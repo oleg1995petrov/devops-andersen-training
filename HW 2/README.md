@@ -40,8 +40,6 @@ ___________________
     
 ## Solution
 
-### Presetting
-
 1. If you use a server image of Debian 10 go to the 3rd step.
 
     In VM install `openssl-server`:
@@ -65,15 +63,14 @@ $ sudo service ssh reload
 3. Copy your pub rsa key from local machine to remote: 
 
 ```bash 
-$ ssh-copy-id -i [/path/to/your/pub-key | usually locates at /home/[your username]/.ssh/id_rsa.pub (or other name)] [your VM's username]@[VM's ip address]
+$ ssh-copy-id -i [/path/to/your/pub/key | usually locates at /home/[your username]/.ssh/id_rsa.pub (or other name)] [your VM's username]@[VM's ip address]
 ```
-
-    If you have no rsa-keys yet, first install a cuple:
+   If you have no rsa-keys yet, first install a cuple:
 
 ```bash
 $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
 ```
-    After that copy your pub key as was written above.
+   After that copy your pub key as was written above.
 
 3. Set up the ansible vars. Edit `roles/common/vars/main.yml` file and set the next variables:
 
@@ -87,7 +84,7 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 ```bash
 $ ansible-vault create [password_file_name | for example: passwd.yml]
 ```
-    Enter a password for protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
+   Enter a password for protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
 ```bash
 $ ansible_become_pass: [your VM's account password]
@@ -101,7 +98,7 @@ $ ansible_become_pass: [your VM's account password]
 $ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pas deploy.yml
 ```
 
-    Enter the password of your password file and wait while Ansible will execute playbook. It may take a few minutes.
+   Enter the password of your password file and wait while Ansible will execute playbook. It may take a few minutes.
 
 
 
