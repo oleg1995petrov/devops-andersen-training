@@ -1,9 +1,10 @@
 # Homework 2 overview
 
 1. Need to create and deploy to virtual machine (hereinafter VM) service is written in [Flask][flask] via Ansible playbook. 
-    * The service listens at least on port 80 (443 as an option) 
-    * The service accepts GET & POST methods
+    * The service listens at least on port 80 (443 as an option). 
+    * The service accepts GET & POST methods.
     * The service should receive `json` object and return strings in the following manner:
+        
         ```bash
         # request
         curl -XPOST -d '{"animal": "cow", "sound": "mooo", "count": 3}' myvm.localhost
@@ -26,7 +27,8 @@
         Made with     by %my_name
         
         ```
-2. Configure `systemd` so that the app starts after reboot
+
+2. Configure `systemd` so that the app starts after reboot.
 3. Secure the VM so that app is not stole:
     * allow connections only to the ports 22, 80, 443.
     * disable root login, all authentication except 'public keys'.
@@ -34,9 +36,7 @@
 ## Requirements
     * Debian 10
     * VirtualBox VM
-    
-___________________
-    
+___
     
 ## Solution
 
@@ -60,22 +60,24 @@ $ sudo apt install -y openssl-server
 ```bash 
 $ sudo service ssh reload
 ```
+
 3. Copy your pub rsa key from local machine to remote: 
 
 ```bash 
 $ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
 ```
-   If you have no rsa-keys yet, first install a cuple:
+   
+    If you have no rsa-keys yet, first install a cuple:
 
 ```bash
 $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
 ```
+
    After that copy your pub key as was written above.
 
-3. Set up the ansible vars. Edit `roles/common/vars/main.yml` file and set the next variables:
-
-* **project_name:** [a desirable name of your project]
-* **ansible_user:** [your VM's username]
+3. Set up the playbook. Edit `roles/common/vars/main.yml` file and set the next variables:
+    * **project_name:** [a desirable name of your project]
+    * **ansible_user:** [your VM's username]
 
 4. Put your VM's ip address to **inventory** file.
 
@@ -84,10 +86,10 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 ```bash
 $ ansible-vault create [password_file_name e.g.: passwd.yml]
 ```
-   Enter a password for protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
+   Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
 ```bash
-$ ansible_become_pass: [your VM's account password]
+   $ ansible_become_pass: [your VM's account password]
 ```
 
 6. And now start the playbook

@@ -1,11 +1,11 @@
 ---
 
-- name: Create gunicorn daemon
+- name: Create a gunicorn daemon
   template:
     src: flask.service.j2
     dest: /etc/systemd/system/flask.service
 
-- name: Ensure gunicornd is started
+- name: Ensure the gunicornd is started
   systemd:
     name: flask.service
     state: started

@@ -10,7 +10,7 @@
     src: sources.list
     dest: /etc/apt/sources.list
 
-- name: Remove apache2 if it installed
+- name: Remove apache2 if it is installed
   apt:
     name: apache2
     state: absent
