@@ -1,6 +1,6 @@
 ---
 
-- name: Create the workdir
+- name: Create a workdir
   file:
     path: '{{ workdir }}'
     state: directory
@@ -21,7 +21,7 @@
     state: latest 
     update_cache: yes 
 
-- name: Clone the repo with the flask app
+- name: Clone the repo with a Flask app
   git: 
     repo: 'https://github.com/oleg1995petrov/flask-app-for-devops-course.git'
     dest: '{{ workdir }}'
