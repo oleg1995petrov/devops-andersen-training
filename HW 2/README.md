@@ -90,7 +90,7 @@ ___
    Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
    ```bash
-      $ ansible_become_pass: [your VM's account password]
+   $ ansible_become_pass: [your VM's account password]
    ```
 
 6. And now start the playbook
