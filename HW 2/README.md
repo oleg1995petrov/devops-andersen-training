@@ -42,7 +42,7 @@ ___________________
 
 1. If you use a server image of Debian 10 go to the 3rd step.
 
-    In VM install `openssl-server`:
+    Into VM install `openssl-server`:
 
 ```bash
 $ sudo apt install -y openssl-server
