@@ -65,7 +65,7 @@ $ sudo service ssh reload
 
 ```bash 
 $ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
-```
+```  
    
    If you have no rsa-keys yet, first install a cuple:
 
@@ -85,7 +85,7 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 
 ```bash
 $ ansible-vault create [password_file_name e.g.: passwd.yml]
-```
+```  
 
    Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
@@ -99,7 +99,7 @@ $ ansible-vault create [password_file_name e.g.: passwd.yml]
 
 ```bash
 $ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pas deploy.yml
-```
+```  
 
    Enter the password of your password file and wait while Ansible will execute playbook. It may take a few minutes.
 
