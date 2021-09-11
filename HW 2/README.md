@@ -55,7 +55,7 @@ ___
     * `PubkeyAuthentication yes`
     * `PasswordAuthentication yes`
 
-    After that reload the ssh service:
+    After that reload the service:
 
    ```bash 
    $ sudo service ssh reload
