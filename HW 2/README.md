@@ -67,7 +67,7 @@ $ sudo service ssh reload
 $ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
 ```
    
-    If you have no rsa-keys yet, first install a cuple:
+   If you have no rsa-keys yet, first install a cuple:
 
 ```bash
 $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
@@ -86,6 +86,7 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 ```bash
 $ ansible-vault create [password_file_name e.g.: passwd.yml]
 ```
+
    Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
 ```bash
