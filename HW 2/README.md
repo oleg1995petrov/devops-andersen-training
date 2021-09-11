@@ -63,7 +63,7 @@ $ sudo service ssh reload
 3. Copy your pub rsa key from local machine to remote: 
 
 ```bash 
-$ ssh-copy-id -i [/path/to/your/pub/key | usually locates at /home/[your username]/.ssh/id_rsa.pub (or other name)] [your VM's username]@[VM's ip address]
+$ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
 ```
    If you have no rsa-keys yet, first install a cuple:
 
@@ -82,7 +82,7 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 5. Create an encrypted file with your VM's account password:
 
 ```bash
-$ ansible-vault create [password_file_name | for example: passwd.yml]
+$ ansible-vault create [password_file_name e.g.: passwd.yml]
 ```
    Enter a password for protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
