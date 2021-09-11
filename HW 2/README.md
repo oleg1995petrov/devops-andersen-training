@@ -44,9 +44,9 @@ ___
 
     Into VM install `openssl-server`:
 
-```bash
-$ sudo apt install -y openssl-server
-```  
+   ```bash
+   $ sudo apt install -y openssl-server
+   ```  
 
 2. Set up `sshd_config` on VM by editing `/etc/ssh/sshd_config` file. Uncomment the next lines and set the next values:
     * `Port 22`
@@ -57,22 +57,22 @@ $ sudo apt install -y openssl-server
 
     After that reload the ssh service:
 
-```bash 
-$ sudo service ssh reload
-```
+   ```bash 
+   $ sudo service ssh reload
+   ```
 
 3. Copy your pub rsa key from local machine to remote: 
 
-```bash 
-$ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
-```  
+   ```bash 
+   $ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
+   ```  
    
    If you have no rsa-keys yet, first install a cuple:
 
-```bash
-$ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
-```
-
+   ```bash
+   $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
+   ```  
+   
    After that copy your pub key as was written above.
 
 3. Set up the playbook. Edit `roles/common/vars/main.yml` file and set the next variables:
@@ -83,24 +83,24 @@ $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
 
 5. Create an encrypted file with your VM's account password:
 
-```bash
-$ ansible-vault create [password_file_name e.g.: passwd.yml]
-```  
-
+   ```bash
+   $ ansible-vault create [password_file_name e.g.: passwd.yml]
+   ```  
+   
    Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
 
-```bash
-   $ ansible_become_pass: [your VM's account password]
-```
+   ```bash
+      $ ansible_become_pass: [your VM's account password]
+   ```
 
 6. And now start the playbook
 
     At the root directory:
 
-```bash
-$ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pas deploy.yml
-```  
-
+   ```bash
+   $ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pas deploy.yml
+   ```
+   
    Enter the password of your password file and wait while Ansible will execute playbook. It may take a few minutes.
 
 
