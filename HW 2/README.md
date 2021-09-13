@@ -44,9 +44,9 @@ ___
 
     For a desktop image you have to install into VM `openssl-server`:
 
-```bash
-$ sudo apt install -y openssl-server
-```  
+   ```bash
+   $ sudo apt install -y openssl-server
+   ```  
 
 2. Set up `sshd_config` on VM by editing `/etc/ssh/sshd_config` file. Uncomment the next lines and set the next values:
     * `Port 22`
