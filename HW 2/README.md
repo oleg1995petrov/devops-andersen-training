@@ -61,7 +61,7 @@ $ sudo apt install -y openssl-server
    $ sudo service ssh reload
    ```
 
-3. Copy your *pub* rsa key from local machine to remote: 
+3. Copy your **pub** rsa key from local machine to remote: 
 
    ```bash 
    $ ssh-copy-id -i [/path/2/key (usually locates at /home/[your username]/.ssh/)] [VM's username]@[VM's ip address]
@@ -73,7 +73,7 @@ $ sudo apt install -y openssl-server
    $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
    ```
 
-   After that copy your *pub* key as was written above.
+   After that copy your **pub** key as was written above.
 
 4. Set up the playbook. Edit `roles/common/vars/main.yml` file and set the next variables:
     * **project_name:** [a desirable name of project]
