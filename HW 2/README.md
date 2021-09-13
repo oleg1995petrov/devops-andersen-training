@@ -42,11 +42,11 @@ ___
 
 1. If you use a server image of Debian 10 go to the 3rd step.
 
-    Into VM install `openssl-server`:
+    For a desktop image you have to install into VM `openssl-server`:
 
-   ```bash
-   $ sudo apt install -y openssl-server
-   ```  
+```bash
+$ sudo apt install -y openssl-server
+```  
 
 2. Set up `sshd_config` on VM by editing `/etc/ssh/sshd_config` file. Uncomment the next lines and set the next values:
     * `Port 22`
@@ -55,53 +55,52 @@ ___
     * `PubkeyAuthentication yes`
     * `PasswordAuthentication yes`
 
-    After that reload the service:
+    After that reload the ssh service:
 
-   ```bash 
-   $ sudo service ssh reload
-   ```
+```bash 
+$ sudo service ssh reload
+```
 
-3. Copy your pub rsa key from local machine to remote: 
+3. Copy your *pub* rsa key from local machine to remote: 
 
-   ```bash 
-   $ ssh-copy-id -i [/path/2/your/pub/key (usually locates at /home/[your username]/.ssh/id_rsa.pub or other name)] [your VM's username]@[VM's ip address]
-   ```  
+```bash 
+$ ssh-copy-id -i [/path/2/key (usually locates at /home/[your username]/.ssh/)] [VM's username]@[VM's ip address]
+```
    
-   If you have no rsa-keys yet, first install a cuple:
+    If you have no rsa keys yet, first install a cuple:
 
-   ```bash
-   $ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
-   ```  
-   
-   After that copy your pub key as was written above.
+```bash
+$ ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
+```
+
+   After that copy your *pub* key as was written above.
 
 3. Set up the playbook. Edit `roles/common/vars/main.yml` file and set the next variables:
-    * **project_name:** [a desirable name of your project]
-    * **ansible_user:** [your VM's username]
+    * **project_name:** [a desirable name of project]
+    * **ansible_user:** [VM's username]
 
-4. Put your VM's ip address to **inventory** file.
+4. Put the VM's ip address to **inventory** file.
 
-5. Create an encrypted file with your VM's account password:
+5. Create an encrypted file with VM's account password:
 
-   ```bash
-   $ ansible-vault create [password_file_name e.g.: passwd.yml]
-   ```  
-   
-   Enter a password to protect that file. Inside it put `ansible_become_pass` variable with your VM's account password:
+```bash
+$ ansible-vault create [password_file_name.yml (e.g.: passwd.yml)]
+```
+   Enter a password to protect that file. Inside it put the `ansible_become_pass` variable with VM's account password:
 
-   ```bash
-   $ ansible_become_pass: [your VM's account password]
-   ```
+```bash
+ansible_become_pass: [your VM's account password]
+```
 
-6. And now start the playbook
+6. Start the playbook
 
     At the root directory:
 
-   ```bash
-   $ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pas deploy.yml
-   ```
-   
-   Enter the password of your password file and wait while Ansible will execute playbook. It may take a few minutes.
+```bash
+$ ansible-playbook -i inventory -e @passwd.yml --ask-vault-pass deploy.yml
+```
+
+   Enter the password of your encrypted file and wait while Ansible will execute the playbook. It may take a few minutes.
 
 
 
