@@ -10,7 +10,7 @@ def get_args():
     parser = ArgumentParser()
     parser.add_argument('process', help='PID or name of process')
     parser.add_argument('-n', '--num-lines', type=int, help=(
-                        'A Maximum number of lines that will be '
+                        'The maximum number of lines that will be '
                         'outputted if it is specifed otherwise - all'))
     parser.add_argument('-e', '--extend', nargs='*', choices=(
                         ('country', 'city', 'address', 'updated')), help=(
