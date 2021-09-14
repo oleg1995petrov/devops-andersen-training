@@ -21,7 +21,7 @@ netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | so
 The script `script.sh` accepts:  
   * positional argument - PID or process name  
   * optional arguments:  
-    * `-n` or `--num-lines` - maximum number of lines that will be outputted if cpecifed otherwise - all
+    * `-n` or `--num-lines` - maximum number of lines that will be outputted if specifed otherwise - all
     * `-e` or `--extend` - displays additional information about organizations. Accepts one or more followings fields separated by space: "updated", "country", "city", "address".
 
 ## Usage
