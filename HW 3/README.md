@@ -9,11 +9,11 @@ netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | so
 
 * Create README.md and describe what will be doing that script
 * The script has to accept PID or a process name as an argument 
-* An user has to manage number of output lines
-* There must be an opportunity to see other connections states
+* A user has to manage number of output lines
+* There must be an opportunity to see other connection states
 * The script has to output understandable error messages
 * The script shouldn't depend on start up privileges and output any warnings
-* The script outputs number of connections to each organizations
+* The script outputs a number of connections to each organizations
 * The script allows to receive other data form `whois` output
 * The script is able to work with `ss`
 
@@ -22,7 +22,7 @@ netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | so
 The script `script.sh` accepts:  
   * positional argument - PID or process name  
   * optional arguments:  
-    * `-n` or `--num-lines` - maximum number of lines that will be outputted if specifed otherwise - all
+    * `-n` or `--num-lines` - a maximum number of lines that will be outputted if it is specifed otherwise - all
     * `-e` or `--extend` - displays additional information about organizations. Accepts one or more followings fields separated by space: "updated", "country", "city", "address".
 
 ## Usage
