@@ -38,7 +38,7 @@ The script `script.sh` accepts:
     ./script.sh firefox -n 3 -e updated country city address	
 
     # or
-    ./script.sh 654321 -n 3 -e country updated
+    ./script.sh 654321 -e country updated
 
     # or
     ./script.sh firefox
