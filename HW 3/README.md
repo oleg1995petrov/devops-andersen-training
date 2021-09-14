@@ -27,12 +27,10 @@ The script `script.sh` accepts:
 ## Usage
 
 1. Pull the script
-2. Make the script executable
-    
     ```bash
-    chmod +x script.sh
-    ``` 
-
+    git pull https://github.com/oleg1995petrov/devops-andersen-training.git .
+    cd 'devops-andersen-training/HW\ 3'
+    ```
 3. Start the script
     
     ```bash
