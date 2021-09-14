@@ -18,7 +18,7 @@ netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | so
 
 ## Solution
 
-The script `script.sh` accepts: 
+The script `script.sh` accepts:  
     * positional argument - PID or process name
     * optional arguments:
 	* `-n` or `--num-lines` - maximum number of lines that will be outputted
