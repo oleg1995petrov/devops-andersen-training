@@ -26,10 +26,10 @@ The script `script.sh` accepts:
 
 ## Usage
 
-1. Clone the script
+1. Clone the repo
     ```bash
-    git clone https://github.com/oleg1995petrov/devops-andersen-training.git .
-    cd 'devops-andersen-training/HW\ 3'
+    git clone https://github.com/oleg1995petrov/devops-andersen-training.git
+    cd 'devops-andersen-training/HW 3'
     ```
 3. Start the script
     
