@@ -26,9 +26,9 @@ The script `script.sh` accepts:
 
 ## Usage
 
-1. Pull the script
+1. Clone the script
     ```bash
-    git pull https://github.com/oleg1995petrov/devops-andersen-training.git .
+    git clone https://github.com/oleg1995petrov/devops-andersen-training.git .
     cd 'devops-andersen-training/HW\ 3'
     ```
 3. Start the script
