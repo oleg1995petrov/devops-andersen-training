@@ -23,7 +23,7 @@ The script `script.sh` accepts:
   * positional argument - PID or process name  
   * optional arguments:  
     * `-n` or `--num-lines` - the maximum number of lines that will be outputted if it is specifed otherwise - all
-    * `-e` or `--extend` - displays additional information about organizations. Accepts one or more followings fields separated by space: "updated", "country", "city", "address".
+    * `-e` or `--extend` - displays additional information about organizations. Accepts one or more following fields separated by space: "updated", "country", "city", "address".
 
 ## Usage
 
