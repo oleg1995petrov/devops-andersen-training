@@ -152,7 +152,7 @@ def main():
     cmd4.stdout.close()
     cmd6 = Popen(('sort',), stdin=cmd5.stdout, stdout=PIPE)
     cmd5.stdout.close()
-    cmd7 = Popen(('tail', '-f'), stdin=cmd6.stdout, stdout=PIPE)
+    cmd7 = Popen(('tail', '-n+1'), stdin=cmd6.stdout, stdout=PIPE)
     cmd6.stdout.close()
     cmd8 = Popen(('grep', '-oP', '(\d+\.){3}\d+'), stdin=cmd7.stdout, 
                   stdout=PIPE)
