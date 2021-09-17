@@ -9,22 +9,22 @@ def get_args():
     """Parses command line arguments"""
     parser = ArgumentParser()
     parser.add_argument('process', help='PID or name of process')
-    parser.add_argument('-n', '--num-lines', type=int, help=(
+    parser.add_argument('-n', '--num-lines', type=int, default=5, help=(
                         'The maximum number of lines that will be '
-                        'outputted if it is specifed otherwise - all'))
+                        'outputted if it is specifed otherwise -> 5.'))
     parser.add_argument('-e', '--extend', nargs='*', choices=(
                         ('country', 'city', 'address', 'updated')), help=(
                         'Displays additional information about ' 
                         'organizations. Accepts one or more followings '
                         'fields separated by space: "updated", "country", '
-                        '"city", "address"'))
+                        '"city", "address".'))
     args = parser.parse_args()
     return args
 
 
 def is_full(storage, vars):
     """Checks if the storage contain enough rows"""
-    if not vars['num_lines'] or len(storage) < vars['num_lines']:
+    if len(storage) < vars['num_lines']:
         return False
     else:
         return True
@@ -227,8 +227,6 @@ def main():
                           vars['conn_header_len'] + 1)
     
     response = get_response(data, vars, header_content)
-    response = (response[: 3 + vars['num_lines']] 
-               if vars['num_lines'] else response)
     response += [f'({len(response) - 3} rows)\n']
     print('\n'.join(response))
 
