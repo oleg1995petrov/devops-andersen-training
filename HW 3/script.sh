@@ -15,7 +15,7 @@ def get_args():
     parser.add_argument('-e', '--extend', nargs='*', choices=(
                         ('country', 'city', 'address', 'updated')), help=(
                         'Displays additional information about ' 
-                        'organizations. Accepts one or more followings '
+                        'organizations. Accepts one or more following '
                         'fields separated by space: "updated", "country", '
                         '"city", "address".'))
     args = parser.parse_args()
