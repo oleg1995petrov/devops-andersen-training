@@ -89,8 +89,7 @@ def get_response(data, vars, header_content):
         'address': vars['address_header_len']
     }
 
-    header = ''
-    border = ''
+    header = border = ''
     
     for h in headers:
         header += header_content[h]
