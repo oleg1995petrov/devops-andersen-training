@@ -22,25 +22,19 @@ def get_args():
     return args
 
 
-def is_full(storage, vars):
-    """Checks if the storage contain enough rows"""
-    if len(storage) < vars['num_lines']:
-        return False
-    else:
-        return True
+def storage_is_full(storage, vars):
+    """Checks if a storage contain enough rows"""
+    return len(storage) >= vars['num_lines']
 
 
 def get_organizations(data):
     """Returns organizations from raw data"""
-    orgs = []
-    for row in data.splitlines():
-        if row.startswith('Organization:'):
-            orgs.append(row.split(':')[-1].strip())
-    return orgs
+    return [row.split(':')[-1].strip() for row in data.splitlines() if 
+            row.startswith('Organization:')]
 
 
 def add_organizations(organizations, storage):
-    """Adds organizations to storage"""
+    """Adds organizations to a storage"""
     for org in organizations:
         if org not in storage:
             storage[org] = {'connections': 1}
@@ -49,14 +43,15 @@ def add_organizations(organizations, storage):
 
 
 def add_field_info(organization, field, value, storage ):
-    """Adds specified field about organizations to storage"""
+    """Adds specified field about organizations to a storage"""
     if not storage[organization].get(field):
-        storage[organization][field] = (value.title() 
-            if field == 'city' else value)
+        storage[organization][field] = (
+            value.title() if field == 'city' else value
+        )
 
 
 def add_extra_info(organizations, fields, data, storage):
-    """Adds additional fields about organizations to storage"""
+    """Adds additional fields about organizations to a storage"""
     data_arr = data.split('# end')
     for i in range(len(organizations)):
         for field in fields:
@@ -81,18 +76,9 @@ def get_response(data, vars, header_content):
                  "{:{}{}{}}".format('', '-', '^', 
                  vars['conn_header_len']))]
 
-    headers = ['organization', 'connections']
-    extra_fields = vars['extra_fields']
-    headers += extra_fields
+    headers = ['organization', 'connections'] + vars['extra_fields']
     response = ["\n{:{}{}}".format('List of organizations', '^', 
                 vars['row_len'] + len(headers) - 1)]
-
-    header = ''
-    for h in headers:
-        header += header_content[h]
-        if h != headers[-1]:
-            header += '|'
-    response.append(header)
 
     border_content = {
         'organization': vars['org_header_len'],
@@ -102,11 +88,18 @@ def get_response(data, vars, header_content):
         'city': vars['city_header_len'],
         'address': vars['address_header_len']
     }
+
+    header = ''
     border = ''
+    
     for h in headers:
+        header += header_content[h]
         border += "{:{}{}{}}".format('', '-', '^', border_content[h])
         if h != headers[-1]:
+            header += '|'
             border += '+'
+
+    response.append(header)
     response.append(border)
 
     row_content = {
@@ -117,6 +110,7 @@ def get_response(data, vars, header_content):
         'city': vars['city_col_len'], 
         'address': vars['address_col_len']
     }
+
     for k, v in data.items():
         row = " {:<{}}".format(k, row_content['organization']) + '|'
         for h in headers[1:]:
@@ -160,7 +154,7 @@ def main():
     cmd_res = cmd8.communicate()[0]
     cmd8.stdout.close()
 
-    ip_array = cmd_res.splitlines()
+    ip_array = cmd_res.splitlines()[::-1]
     data = {}
 
     for ip in ip_array:
@@ -170,7 +164,7 @@ def main():
 
         organizations = get_organizations(org_data)
         if organizations:
-            if is_full(data, vars):
+            if storage_is_full(data, vars):
                 break
             add_organizations(organizations, data)
         else: 
@@ -181,6 +175,7 @@ def main():
 
     data = dict(sorted(data.items(), 
                 key=lambda x: (x[0], x[1]['connections'])))
+
     vars['org_max_len'] = (max([len(org) for org in data.keys()]) 
                            if data else len('Organization'))
     vars['org_header_len'] = vars['org_max_len'] + 2
@@ -190,7 +185,7 @@ def main():
 
     header_content = {
         'organization': '{:{}{}}'.format('Organization', '^', 
-                         vars['org_header_len']),
+                        vars['org_header_len']),
         'connections': '{:{}{}}'.format('Connections', '^', 
                         vars['conn_header_len'])
     }
@@ -226,7 +221,7 @@ def main():
         vars['row_len'] = (vars['org_header_len'] + 
                           vars['conn_header_len'] + 1)
     
-    response = get_response(data, vars, header_content)
+    response = get_response(data, vars, header_content)[: 3 + vars['num_lines']]
     response += [f'({len(response) - 3} rows)\n']
     print('\n'.join(response))
 
