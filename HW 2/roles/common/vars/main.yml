@@ -1,7 +1,7 @@
 ---
 
 project_name: flask
-ansible_user: YOUR VM'S USERNAME
+ansible_user: [YOUR VM'S USERNAME]
 workdir: '/home/{{ ansible_user }}/{{ project_name }}'
 ansible_become_pass: '{{ ansible_become_pass }}'
 ansible_python_interpreter: /usr/bin/python3

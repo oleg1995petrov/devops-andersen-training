@@ -22,7 +22,7 @@
     state: latest 
     update_cache: yes 
 
-- name: Clone the repo with a Flask app
+- name: Clone the repo with the Flask app
   git: 
     repo: 'https://github.com/oleg1995petrov/flask-app-for-devops-course.git'
     dest: '{{ workdir }}'
@@ -32,36 +32,3 @@
   pip:
     executable: pip3
     requirements: '{{ workdir }}/requirements.txt'
-
-
-####################################################################################
-# curl: (60) SSL certificate problem: self signed certificate                      #
-####################################################################################
-# - name: Install cryptography                                                     #
-#   pip:                                                                           #
-#     executable: pip3                                                             #
-#     name: cryptography                                                           #
-#                                                                                  #
-# - name: Generate an OpenSSL private key                                          #
-#   openssl_privatekey:                                                            #
-#     path: "/etc/ssl/certs/{{ host_name }}.pem"                                   #
-#     size: 4096                                                                   #
-#     type: "RSA"                                                                  #
-#     backup: yes                                                                  #
-#                                                                                  #
-# - name: Generate an OpenSSL Certificate Signing Request with Subject information #
-#   openssl_csr:                                                                   #
-#     path: "/etc/ssl/certs/{{ host_name }}.csr"                                   #
-#     privatekey_path: "/etc/ssl/certs/{{ host_name }}.pem"                        #
-#     country_name: "BY"                                                           #
-#     organization_name: "Example, Inc"                                            #
-#     email_address: "example@example.com"                                         #
-#     common_name: "{{ host_name }}"                                               #
-#                                                                                  #
-# - name: Generate a self signed OpenSSL certificate                               #
-#   openssl_certificate:                                                           #
-#     path: "/etc/ssl/certs/{{ host_name }}.crt"                                   #
-#     privatekey_path: "/etc/ssl/certs/{{ host_name }}.pem"                        #
-#     csr_path: "/etc/ssl/certs/{{ host_name }}.csr"                               #
-#     provider: selfsigned                                                         #
-####################################################################################

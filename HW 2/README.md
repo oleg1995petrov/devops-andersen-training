@@ -91,8 +91,13 @@ ___
    ```bash
    ansible_become_pass: [your VM's account password]
    ```
+7. Install the required ansible module:  
+    
+    ```bash
+    ansible-galaxy collection install community.crypto
+    ```
 
-7. Start the playbook
+8. Start the playbook
 
     At the root directory:
 

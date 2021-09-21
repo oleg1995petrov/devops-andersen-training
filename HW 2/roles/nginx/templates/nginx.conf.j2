@@ -1,9 +1,21 @@
 server {
-    listen 80          default_server;
-    server_name        {{ host_name }} www.{{ host_name }};
+    listen 80;
+    listen [::]:80;
+    server_name {{ host_name }} www.{{ host_name }};
 
-    access_log         /var/log/nginx/{{ project_name }}.access.log;
-    error_log          /var/log/nginx/{{ project_name }}.error.log error;
+    location / {
+        proxy_pass http://unix:{{ workdir }}/{{ project_name}}.sock;
+    }
+}
+
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name {{ host_name }} www.{{ host_name }};
+    ssl on;
+    ssl_certificate     /etc/ssl/crt/{{ host_name }}.crt;
+    ssl_certificate_key /etc/ssl/crt/{{ host_name }}.pem;
+
 
     location / {
         proxy_pass http://unix:{{ workdir }}/{{ project_name}}.sock;

@@ -1,5 +1,22 @@
 ---
 
+- name: Generate an OpenSSL private key                                          
+  community.crypto.openssl_privatekey:                                                            
+    path: "/etc/ssl/certs/{{ host_name }}.pem"                                   
+                                                                                 
+- name: Generate an OpenSSL Certificate Signing Request 
+  community.crypto.openssl_csr:                                                                  
+    path: "/etc/ssl/certs/{{ host_name }}.csr"                                   
+    privatekey_path: "/etc/ssl/certs/{{ host_name }}.pem"                                                 
+    common_name: "{{ host_name }}"                                              
+                                                                                
+- name: Generate a self signed OpenSSL certificate                               
+  community.crypto.x509_certificate:                                                           
+    path: "/etc/ssl/certs/{{ host_name }}.crt"                                   
+    privatekey_path: "/etc/ssl/certs/{{ host_name }}.pem"                        
+    csr_path: "/etc/ssl/certs/{{ host_name }}.csr"                               
+    provider: selfsigned   
+
 - name: Ensure the default nginx conf is removed
   file:
     path: /etc/nginx/sites-enabled/default
@@ -10,7 +27,7 @@
     src: 'nginx.conf.j2'
     dest: '/etc/nginx/sites-available/{{ project_name }}'
 
-- name: Ensure the conf is enabled and nginx is reloaded
+- name: Ensure the nginx conf is enabled and nginx is reloaded
   file: 
     src: '/etc/nginx/sites-available/{{ project_name }}'
     dest: '/etc/nginx/sites-enabled/{{ project_name }}'
