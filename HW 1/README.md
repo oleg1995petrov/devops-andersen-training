@@ -67,10 +67,24 @@ executing Linux commands. I've read its documentation and set up it in my script
 `Sep 14 2021`  
 Today I've finished to write the script. I've added formatting output and implemented
 additional tasks.
+
+`Sep 15 2021`
+Today I've got acquainted with the concept of Linux namespaces and containers.
+I've got a little more knowledge about Docker architecture. Also I've started
+to do homework 6. I've written Dockerfile but got not quite a good result.
+I will continue improve it to get the best result.
+
+`Sep 16 2021`
+Today I've done the best dokcer image for my [Flask app][flask_app] as I think.
+I've started to write telegram bot and to learn basic concepts of Go language.
+I have found the telegram library which will help me to writte the bot on Go.
+
+`Sep 17 2021`
+I've written a minimal viable bot that fullfills the nessesary work.
+I will continue to improve it.
+
   
   
-
-
 
 
 
