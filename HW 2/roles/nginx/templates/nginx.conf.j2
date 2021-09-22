@@ -13,8 +13,8 @@ server {
     listen [::]:443 ssl;
     server_name {{ host_name }} www.{{ host_name }};
     ssl on;
-    ssl_certificate     /etc/ssl/crt/{{ host_name }}.crt;
-    ssl_certificate_key /etc/ssl/crt/{{ host_name }}.pem;
+    ssl_certificate     {{ crt_dir }}/{{ host_name }}.crt;
+    ssl_certificate_key {{ crt_dir }}/{{ host_name }}.pem;
 
 
     location / {

@@ -1,25 +1,25 @@
 ---
 
-- name: Create an ssl directory
+- name: Create a directory for SSL certificates
   file:
-    path: /etc/ssl/crt
+    path: '{{ crt_dir }}'
     state: directory
 
 - name: Generate an OpenSSL private key                                          
   community.crypto.openssl_privatekey:                                                            
-    path: "/etc/ssl/crt/{{ host_name }}.pem"                                   
+    path: "{{ crt_dir }}/{{ host_name }}.pem"                                   
                                                                                  
 - name: Generate an OpenSSL Certificate Signing Request 
   community.crypto.openssl_csr:                                                                  
-    path: "/etc/ssl/crt/{{ host_name }}.csr"                                   
-    privatekey_path: "/etc/ssl/crt/{{ host_name }}.pem"                                                 
+    path: "{{ crt_dir }}/{{ host_name }}.csr"                                   
+    privatekey_path: "{{ crt_dir }}/{{ host_name }}.pem"                                                 
     common_name: "{{ host_name }}"                                              
                                                                                 
 - name: Generate a self signed OpenSSL certificate                               
   community.crypto.x509_certificate:                                                           
-    path: "/etc/ssl/crt/{{ host_name }}.crt"                                   
-    privatekey_path: "/etc/ssl/crt/{{ host_name }}.pem"                        
-    csr_path: "/etc/ssl/crt/{{ host_name }}.csr"                               
+    path: "{{ crt_dir }}/{{ host_name }}.crt"                                   
+    privatekey_path: "/{{ crt_dir }}/{{ host_name }}.pem"                        
+    csr_path: "{{ crt_dir }}/{{ host_name }}.csr"                               
     provider: selfsigned   
 
 - name: Ensure the default nginx conf is removed

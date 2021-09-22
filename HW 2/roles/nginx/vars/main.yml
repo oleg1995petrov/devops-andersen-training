@@ -1,3 +1,4 @@
 ---
 
 host_name: 'localhost'
+crt_dir: '/etc/ssl/crt'
