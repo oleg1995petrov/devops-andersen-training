@@ -107,7 +107,7 @@ ___
 
    Enter the password of your encrypted file and wait while Ansible will execute the playbook. It may take a few minutes.
    
-   ! Note that if you use `curl` with `https` protocol you has to use `-k` argument to allow `curl` proceed and operate with self-signed SSL sertificate. 
+   ! Note that if you use `curl` with `https` protocol you have to use `-k` argument to allow `curl` proceed and operate with self-signed SSL sertificate. 
 
 
 
