@@ -7,9 +7,9 @@
     enabled: yes
     daemon_reload: yes
 
-- name: Restart gunicorn
-  service:
-    name: flask
-    state: restarted
-    daemon_reload: yes
-  listen: "Reload nginx"
+# - name: Restart gunicorn
+#   service:
+#     name: flask
+#     state: restarted
+#     daemon_reload: yes
+#   listen: "Reload nginx"
