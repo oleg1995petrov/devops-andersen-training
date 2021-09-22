@@ -75,7 +75,7 @@ to do homework 6. I've written Dockerfile but got not quite a good result.
 I will continue improve it to get the best result.
 
 `Sep 16 2021`  
-Today I've done the best dokcer image for my [Flask app][flask_app] as I think.
+Today I've done the best docker image for my [Flask app][flask_app] as I think.
 I've started to write telegram bot and to learn basic concepts of Go language.
 I have found the telegram library which will help me to writte the bot on Go.
 
