@@ -24,7 +24,7 @@ def get_args():
 
 
 def get_data_per_page(response):
-    """Retrieves PRs's data from one page"""
+    """Retrieves PRs' data from one page"""
     data = {}
     j = response.json()
     for i in j:
@@ -40,7 +40,7 @@ def get_data_per_page(response):
 
 
 def get_data(response):
-    """Retrieves PR's data from all pages"""
+    """Receives PRs' data from all pages and sorts them"""
     data = get_data_per_page(response)
     while 'next' in response.links.keys():
         response = requests.get(response.links['next']['url'])
@@ -57,7 +57,7 @@ def get_data(response):
 
 
 def get_data_handler(response):
-    """Retrieves data and forms required variables for output"""
+    """Receives PRs' data and generates required variables for output"""
     data = get_data(response)
     contrib_header_len = (max([len(c) for c in data.keys()]) + 2 if data 
                           else MIN_CONTRIB_HEADER_LEN)
