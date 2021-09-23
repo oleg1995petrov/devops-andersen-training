@@ -25,13 +25,14 @@ The script `script.sh` accepts:
     * `-n` or `--num-lines` - the maximum number of lines that will be outputted if it is specifed otherwise -> 5.
     * `-e` or `--extend` - displays additional information about organizations. Accepts one or more following fields separated by space: "updated", "country", "city", "address".
 
-## Usage
+## The User Guide
 
-1. Clone the repo
+1. Clone the repo:
+
     ```bash
     git clone https://github.com/oleg1995petrov/devops-andersen-training.git && cd 'devops-andersen-training/HW 3'
     ```
-3. Start the script
+2. Start the script:
     
     ```bash
     ./script.sh firefox -n 3 -e updated country city address	

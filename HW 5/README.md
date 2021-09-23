@@ -15,13 +15,15 @@
 The script `script.sh` accepts:  
   * positional argument - Github repository address.
 
-## Usage
+## The User Guide
 
-1. Clone the repo
+1. Clone the repo:
+
     ```bash
     git clone https://github.com/oleg1995petrov/devops-andersen-training.git && cd 'devops-andersen-training/HW 5'
     ```
-3. Start the script
+
+2. Start the script:
     
     ```bash
     ./script.sh github.com/{owner}/{repository}

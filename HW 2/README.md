@@ -37,7 +37,7 @@
     * Debian 10
     * VirtualBox VM
     
-## Solution
+## The User Guide
 
 1. If you use a server image of Debian 10 go to the 3rd step.
 
