@@ -60,7 +60,7 @@ def get_data_handler(response):
     """Retrieves data and forms required variables for output"""
     data = get_data(response)
     contrib_header_len = (max([len(c) for c in data.keys()]) + 2 if data 
-                         else MIN_CONTRIB_HEADER_LEN)
+                          else MIN_CONTRIB_HEADER_LEN)
     pulls_header_len = MIN_PULLS_HEADER_LEN
     try:
         labels_header_len = max(
