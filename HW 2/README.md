@@ -36,7 +36,6 @@
 ## Requirements
     * Debian 10
     * VirtualBox VM
-___
     
 ## Solution
 
