@@ -52,19 +52,15 @@ def get_data(response):
             data.items()
         )).items(),
         key=lambda x: x[1]['pulls'],
-        reverse=True
-    ))
+        reverse=True))
     return data
 
 
 def get_data_handler(response):
     """Retrieves data and forms required variables for output"""
-
     data = get_data(response)
-    contrib_header_len = (max(
-        [len(c) for c in data.keys()]) + 2 if data else 
-        MIN_CONTRIB_HEADER_LEN
-    )
+    contrib_header_len = (max([len(c) for c in data.keys()]) + 2 if data 
+                         else MIN_CONTRIB_HEADER_LEN)
     pulls_header_len = MIN_PULLS_HEADER_LEN
     try:
         labels_header_len = max(
@@ -78,8 +74,7 @@ def get_data_handler(response):
     if labels_header_len < MIN_LABELS_HEADER_LEN:
         labels_header_len = MIN_LABELS_HEADER_LEN
     row_len = (contrib_header_len + pulls_header_len + 
-              labels_header_len + NUM_HEADERS)
-
+               labels_header_len + NUM_HEADERS)
     vars = {
         'contrib_header_len': contrib_header_len, 
         'pulls_header_len': pulls_header_len,
@@ -156,21 +151,18 @@ def main():
               'including the Github domain, repository owner '
               'and its name.❗')
         return 
-
     pull_url = PULL_API_URL % (match.group(3), match.group(4))
     params = {
         'accept': 'application/vnd.github.v3+json',
         'state': 'open',
         'per_page': 100,
     }
-
     resp = requests.get(pull_url, params)
     if resp.status_code != 200:
         print("❗Make sure you've passed "
               "an existent repository address. "
               "Note private repositories are unreachable.❗")
         return
-
     data, vars = get_data_handler(resp)
     response = get_response_handler(data, vars)
     print('\n'.join(response))
