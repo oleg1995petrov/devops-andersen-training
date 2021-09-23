@@ -7,3 +7,21 @@
 * Ask my chat mate to review my code and create a meaningful pull request.
 * Do the same for him.
 * Merge my fellow PR.
+
+## Solution
+
+The script `script.sh` accepts:  
+  * positional argument - Github repository address.
+
+## Usage
+
+1. Clone the repo
+    ```bash
+    git clone https://github.com/oleg1995petrov/devops-andersen-training.git && cd 'devops-andersen-training/HW 5'
+    ```
+3. Start the script
+    
+    ```bash
+    ./script.sh github.com/{owner}/{repository}
+
+    ```
