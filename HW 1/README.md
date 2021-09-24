@@ -89,7 +89,7 @@ and written a minimal viable script that retrieves the nessesary data, transform
 in a structed form.
 
 `Sep 20 2021`  
-Today I've refactored and optimized the script. Also I continue to learn GO language.
+Today I've refactored and optimized the script. Also I continue to learn Go language.
 
 
 
