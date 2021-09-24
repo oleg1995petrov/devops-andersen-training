@@ -8,7 +8,7 @@
 [github]: https://github.com/
 [course]: https://github.com/oleg1995petrov/devops-andersen-training/
 
-## Here is blog itself
+## Here is the blog itself
 
 `Aug 30 2021`  
 Today I've learned several software development models such as Waterfall, 
