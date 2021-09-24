@@ -49,7 +49,7 @@ are helping to work productive with them. Also I continue to create the playbook
 I've written a basic playbook with four roles. Each of the roles has its own files. 
   
 `Sep 9 2021`  
-Today I've written the minimal viable playbook. I continue to learn ansible
+Today I've written a minimal viable playbook. I continue to learn ansible
 builtin modules to complete my playbook.
   
 `Sep 10 2021`  
@@ -71,20 +71,27 @@ additional tasks.
 `Sep 15 2021`
 Today I've got acquainted with the concept of Linux namespaces and containers.
 I've got a little more knowledge about Docker architecture. Also I've started
-to do homework 6. I've written Dockerfile but got not quite a good result.
+to do [homework 6][hw6]. I've written Dockerfile but got not quite a good result.
 I will continue improve it to get the best result.
 
 `Sep 16 2021`  
 Today I've done the best docker image for my [Flask app][flask_app] as I think.
-I've started to write telegram bot and to learn basic concepts of Go language.
+I've started to write [telegram bot][hw4] and to learn basic concepts of Go language.
 I have found the telegram library which will help me to writte the bot on Go.
 
 `Sep 17 2021`  
-I've written a minimal viable bot that fullfills the nessesary work.
+I've written a minimal viable [telegram bot][hw4] that fullfills the nessesary work.
 I will continue to improve it.
 
-  
-  
+`Sep 18 2021`  
+Today I've started to do [homework 5][hw5]. I've learned [Github pulls API][pulls API]
+and written a minimal viable script that retrieves the nessesary data, transforms and outputs them
+in a structed form.
+
+`Sep 20 2021`  
+Today I've refactored and optimized the script. Also I continue to learn GO language.
+
+
 
 
 
@@ -93,4 +100,5 @@ I will continue to improve it.
 [hw3]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%203
 [hw4]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%204
 [hw5]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%205
+[pulls API]: https://docs.github.com/en/rest/reference/pulls
 [hw6]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%206
