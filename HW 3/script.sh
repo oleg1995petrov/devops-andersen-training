@@ -90,14 +90,12 @@ def get_response(data, vars, header_content):
     }
 
     header = border = ''
-    
     for h in headers:
         header += header_content[h]
         border += "{:{}{}{}}".format('', '-', '^', border_content[h])
         if h != headers[-1]:
             header += '|'
             border += '+'
-
     response.append(header)
     response.append(border)
 
@@ -109,7 +107,6 @@ def get_response(data, vars, header_content):
         'city': vars['city_col_len'], 
         'address': vars['address_col_len']
     }
-
     for k, v in data.items():
         row = " {:<{}}".format(k, row_content['organization']) + '|'
         for h in headers[1:]:
