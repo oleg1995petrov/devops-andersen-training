@@ -23,7 +23,7 @@ def get_args():
 
 
 def storage_is_full(storage, vars):
-    """Checks if a storage contain enough rows"""
+    """Checks if the storage contain enough rows"""
     return len(storage) >= vars['num_lines']
 
 
@@ -34,7 +34,7 @@ def get_organizations(data):
 
 
 def add_organizations(organizations, storage):
-    """Adds organizations to a storage"""
+    """Adds organizations to the storage"""
     for org in organizations:
         if org not in storage:
             storage[org] = {'connections': 1}
@@ -43,7 +43,7 @@ def add_organizations(organizations, storage):
 
 
 def add_field_info(organization, field, value, storage ):
-    """Adds specified field about organizations to a storage"""
+    """Adds specified field about organizations to the storage"""
     if not storage[organization].get(field):
         storage[organization][field] = (
             value.title() if field == 'city' else value
@@ -51,7 +51,7 @@ def add_field_info(organization, field, value, storage ):
 
 
 def add_extra_info(organizations, fields, data, storage):
-    """Adds additional fields about organizations to a storage"""
+    """Adds additional fields about organizations to the storage"""
     data_arr = data.split('# end')
     for i in range(len(organizations)):
         for field in fields:
