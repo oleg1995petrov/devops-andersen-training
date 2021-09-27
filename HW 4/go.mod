@@ -1,5 +1,4 @@
 module github.com/oleg1995petrov/devops-andersen-training
-// module devops-andersen-training
 
 go 1.17
 
