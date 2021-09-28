@@ -1,13 +1,10 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
-	"net/http"
 	re "regexp"
 	"strings"
-	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
@@ -19,70 +16,18 @@ var (
 		"Type /tasks to see the list with homeworks which are done.\n" +
 		"Type /task#, where \"#\" is the number of the homework, to receive " +
 		"the link to the folder with the homework done.\n"
-	api_url         string = "https://api.github.com/repos/oleg1995petrov/devops-andersen-training/contents"
 	repo_url        string = "https://github.com/oleg1995petrov/devops-andersen-training"
-	hw_err          string = "⛔️ No no no! Homework isn't done yet."
 	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
 	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
 		"Type \"/help\" to see a tip."
-	tasks      []HW
-	updated_at time.Time
 )
-
-type HW struct {
-	Name string `json:"name"`
-	Url  string `json:"html_url"`
-}
-
-func fetch_tasks_handler() {
-	if len(tasks) == 0 {
-		fetch_tasks()
-	} else {
-		now := time.Now().UTC()
-		diff := now.Sub(updated_at)
-		if diff.Minutes() >= 30 {
-			fetch_tasks()
-		}
-	}
-}
-
-func fetch_tasks() {
-	resp, err := http.Get(api_url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if resp.Body != nil {
-		defer resp.Body.Close()
-		err = json.NewDecoder(resp.Body).Decode(&tasks)
-		if err != nil {
-			log.Fatal(err)
-		}
-		updated_at = time.Now()
-	}
-}
-
-func get_hw_url(hw_num string) string {
-	url := ""
-	hw_name := fmt.Sprintf("HW %s", hw_num)
-	for i := range tasks {
-		if tasks[i].Name == hw_name {
-			url = tasks[i].Url
-			break
-		}
-	}
-	if url == "" {
-		url = hw_err
-	}
-	return url
-}
 
 func init() {
 	fetch_tasks()
-	updated_at = time.Now().UTC()
 }
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("Your very secret key!")
+	bot, err := tgbotapi.NewBotAPI("Your very secret APi key")
 	if err != nil {
 		log.Panic(err)
 	}
