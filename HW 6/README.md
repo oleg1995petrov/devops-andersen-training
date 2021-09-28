@@ -10,6 +10,6 @@ Build a docker image for my [Flask app](https://oleg1995petrov/flask-app-for-dev
 1. Run the docker image and you are done:
 
     ```bash
-    docker run --rm -p 8080:8080 oleg1995petrov/flask-andersen:v1-superslim
+    docker run --rm -p 8080:8080 oleg1995petrov/flask-andersen:v2
 
     ```
