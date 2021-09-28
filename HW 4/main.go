@@ -13,9 +13,9 @@ var (
 	greeting string = "Hi there 🖐️! I'm a simple but useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
 		"☝️ At the top you can see my commands. Type \"/help\" to see a tip again."
 	help_msg string = "Type /git to receive the course repository address.\n" +
-		"Type /tasks to see the list with homeworks which are done.\n" +
-		"Type /task#, where \"#\" is the number of the homework, to receive " +
-		"the link to the folder with the homework done.\n"
+		"Type /tasks to see a list with tasks done.\n" +
+		"Type /task#, where \"#\" is a task number, to receive " +
+		"the link to the folder with the task done.\n"
 	repo_url        string = "https://github.com/oleg1995petrov/devops-andersen-training"
 	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
 	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
