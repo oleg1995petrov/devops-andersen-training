@@ -7,12 +7,13 @@ import (
 	"net/http"
 	re "regexp"
 	"strings"
+	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 var (
-	greeting string = "Hi there 🧑‍💻! I'm a simple bot & I was made with ❤️ by @by_ventz.\n\n" +
+	greeting string = "Hi there 🖐️! I'm a simple but useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
 		"☝️ At the top you can see my commands. Type \"/help\" to see a tip again."
 	help_msg string = "Type /git to receive the course repository address.\n" +
 		"Type /tasks to see the list with homeworks which are done.\n" +
@@ -24,13 +25,25 @@ var (
 	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
 	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
 		"Type \"/help\" to see a tip."
-	tasks           []HW
-
+	tasks      []HW
+	updated_at time.Time
 )
 
 type HW struct {
 	Name string `json:"name"`
 	Url  string `json:"html_url"`
+}
+
+func fetch_tasks_handler() {
+	if len(tasks) == 0 {
+		fetch_tasks()
+	} else {
+		now := time.Now().UTC()
+		diff := now.Sub(updated_at)
+		if diff.Minutes() >= 30 {
+			fetch_tasks()
+		}
+	}
 }
 
 func fetch_tasks() {
@@ -44,6 +57,7 @@ func fetch_tasks() {
 		if err != nil {
 			log.Fatal(err)
 		}
+		updated_at = time.Now()
 	}
 }
 
@@ -64,6 +78,7 @@ func get_hw_url(hw_num string) string {
 
 func init() {
 	fetch_tasks()
+	updated_at = time.Now().UTC()
 }
 
 func main() {
@@ -95,12 +110,11 @@ func main() {
 			case "git":
 				msg.Text = repo_url
 			case "tasks":
-				fetch_tasks()
+				fetch_tasks_handler()
 				text := "The next tasks are done ✅:\n"
 				for i := range tasks {
 					if strings.HasPrefix(tasks[i].Name, "HW") {
 						hw_num := strings.Fields(tasks[i].Name)[1]
-						// hw_num := strings.Split(tasks[i].Name, " ")[1]
 						text += fmt.Sprintf("%d. %s", i+1, fmt.Sprintf("/task%s\n", hw_num))
 					}
 				}
@@ -109,7 +123,7 @@ func main() {
 			default:
 				pattern := re.MustCompile("/task([0-9]+)")
 				if pattern.MatchString(update.Message.Text) {
-					fetch_tasks()
+					fetch_tasks_handler()
 					hw_num := pattern.FindStringSubmatch(update.Message.Text)[1]
 					msg.Text = get_hw_url(hw_num)
 				} else {
