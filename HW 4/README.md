@@ -13,4 +13,4 @@ Write a functional telegram bot on Go language that has at least 3 commands:
     docker run --rm oleg1995petrov/tgbot-andersen:latest
     ```
 
-2. Find the `VenzDevOpsBot` telegram bot and chat with it.
+2. Find the `VentzDevOpsBot` telegram bot and chat with it.
