@@ -1,5 +1,5 @@
 # Project overview
-It's the DevOps course from the Andersen company. I will be learning that direction for two months and I will do be my best.
+It's the DevOps course from the Andersen company. I will have been learning this direction for two months and I will try to do my best.
 
 ## About me
 Hi there! My name is **Aleh**. I am from **Belarus**. I graduated from **Belarussian State Economic University with a degree in Economics**. I worked in different companies such as bank, engineering company, grocery delivery company. In general those companies were government companies. But no one of my positions were bringing me real pleasure.  
