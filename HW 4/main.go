@@ -6,9 +6,6 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-var noncmd_err string = "🥱 I only accept several commands but I keep learning.\n" +
-	"Type \"/help\" to see a tip."
-
 func init() {
 	fetch_tasks()
 }
@@ -28,16 +25,9 @@ func main() {
 	}
 
 	for update := range updates {
-		if update.Message == nil {
-			continue
-		}
-
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
-		if update.Message.IsCommand() {
-			msg.Text = generate_response_from_cmd(update)
-			bot.Send(msg)
-		} else {
-			msg.Text = noncmd_err
+		if update.Message != nil {
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
+			msg.Text = get_response(update)
 			bot.Send(msg)
 		}
 	}

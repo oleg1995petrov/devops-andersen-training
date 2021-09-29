@@ -17,14 +17,16 @@ var (
 	repo_url   string = "https://github.com/oleg1995petrov/devops-andersen-training"
 	tasks      []HW
 	updated_at time.Time
-	greeting   string = "Hi there 🖐️! I'm a simple but useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
+	greeting   string = "Hi there 🖐️! I'm simple but a useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
 		"☝️ At the top you can see my commands. Type \"/help\" to see a tip again."
 	help_msg string = "Type /git to receive the course repository address.\n" +
 		"Type /tasks to see a list with tasks done.\n" +
 		"Type /task#, where \"#\" is a task number, to receive " +
 		"the link to the folder with the task done.\n"
-	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
 	task_err        string = "⛔️ No no no! Homework isn't done yet."
+	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
+	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
+		"Type \"/help\" to see a tip."
 )
 
 type HW struct {
@@ -59,6 +61,17 @@ func fetch_tasks() {
 	}
 }
 
+func get_response(update tgbotapi.Update) string {
+	var response string
+
+	if update.Message.IsCommand() {
+		response = generate_response_from_cmd(update)
+	} else {
+		response = noncmd_err
+	}
+	return response
+}
+
 func generate_response_from_cmd(update tgbotapi.Update) string {
 	var response string
 
@@ -78,7 +91,7 @@ func generate_response_from_cmd(update tgbotapi.Update) string {
 				response += fmt.Sprintf("%d. %s", i+1, fmt.Sprintf("/task%s\n", task_num))
 			}
 		}
-		response += "Check them out!"
+		response += "\nCheck them out!"
 	default:
 		pattern := re.MustCompile("/task([0-9]+)")
 		if pattern.MatchString(update.Message.Text) {
@@ -93,8 +106,9 @@ func generate_response_from_cmd(update tgbotapi.Update) string {
 }
 
 func get_task_url(task_num string) string {
-	url := ""
+	var url string
 	task_name := fmt.Sprintf("HW %s", task_num)
+
 	for i := range tasks {
 		if tasks[i].Name == task_name {
 			url = tasks[i].Url
