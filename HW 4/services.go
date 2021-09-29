@@ -51,6 +51,7 @@ func fetch_tasks() {
 	if resp_err != nil {
 		log.Fatal(resp_err)
 	}
+
 	if resp.Body != nil {
 		defer resp.Body.Close()
 		decode_err := json.NewDecoder(resp.Body).Decode(&tasks)

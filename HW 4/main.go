@@ -13,7 +13,7 @@ func init() {
 func main() {
 	bot, bot_err := tgbotapi.NewBotAPI("Your very secret API key")
 	if bot_err != nil {
-		log.Panic(bot_err)
+		log.Fatal(bot_err)
 	}
 
 	u := tgbotapi.NewUpdate(0)
@@ -21,7 +21,7 @@ func main() {
 
 	updates, updates_err := bot.GetUpdatesChan(u)
 	if updates_err != nil {
-		log.Panic(updates_err)
+		log.Fatal(updates_err)
 	}
 
 	for update := range updates {
