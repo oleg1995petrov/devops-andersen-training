@@ -5,14 +5,26 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	re "regexp"
+	"strings"
 	"time"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
 var (
 	api_url    string = "https://api.github.com/repos/oleg1995petrov/devops-andersen-training/contents"
+	repo_url   string = "https://github.com/oleg1995petrov/devops-andersen-training"
 	tasks      []HW
 	updated_at time.Time
-	hw_err     string = "⛔️ No no no! Homework isn't done yet."
+	greeting   string = "Hi there 🖐️! I'm a simple but useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
+		"☝️ At the top you can see my commands. Type \"/help\" to see a tip again."
+	help_msg string = "Type /git to receive the course repository address.\n" +
+		"Type /tasks to see a list with tasks done.\n" +
+		"Type /task#, where \"#\" is a task number, to receive " +
+		"the link to the folder with the task done.\n"
+	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
+	task_err        string = "⛔️ No no no! Homework isn't done yet."
 )
 
 type HW struct {
@@ -33,31 +45,64 @@ func fetch_tasks_handler() {
 }
 
 func fetch_tasks() {
-	resp, err := http.Get(api_url)
-	if err != nil {
-		log.Fatal(err)
+	resp, resp_err := http.Get(api_url)
+	if resp_err != nil {
+		log.Fatal(resp_err)
 	}
 	if resp.Body != nil {
 		defer resp.Body.Close()
-		err = json.NewDecoder(resp.Body).Decode(&tasks)
-		if err != nil {
-			log.Fatal(err)
+		decode_err := json.NewDecoder(resp.Body).Decode(&tasks)
+		if decode_err != nil {
+			log.Fatal(decode_err)
 		}
 		updated_at = time.Now()
 	}
 }
 
-func get_hw_url(hw_num string) string {
+func generate_response_from_cmd(update tgbotapi.Update) string {
+	var response string
+
+	switch update.Message.Command() {
+	case "start":
+		response = greeting
+	case "help":
+		response = help_msg
+	case "git":
+		response = repo_url
+	case "tasks":
+		fetch_tasks_handler()
+		response = "The next tasks are done ✅:\n"
+		for i := range tasks {
+			if strings.HasPrefix(tasks[i].Name, "HW") {
+				task_num := strings.Fields(tasks[i].Name)[1]
+				response += fmt.Sprintf("%d. %s", i+1, fmt.Sprintf("/task%s\n", task_num))
+			}
+		}
+		response += "Check them out!"
+	default:
+		pattern := re.MustCompile("/task([0-9]+)")
+		if pattern.MatchString(update.Message.Text) {
+			fetch_tasks_handler()
+			task_num := pattern.FindStringSubmatch(update.Message.Text)[1]
+			response = get_task_url(task_num)
+		} else {
+			response = unknown_cmd_err
+		}
+	}
+	return response
+}
+
+func get_task_url(task_num string) string {
 	url := ""
-	hw_name := fmt.Sprintf("HW %s", hw_num)
+	task_name := fmt.Sprintf("HW %s", task_num)
 	for i := range tasks {
-		if tasks[i].Name == hw_name {
+		if tasks[i].Name == task_name {
 			url = tasks[i].Url
 			break
 		}
 	}
 	if url == "" {
-		url = hw_err
+		url = task_err
 	}
 	return url
 }
