@@ -13,11 +13,9 @@ import (
 )
 
 var (
-	api_url    string = "https://api.github.com/repos/oleg1995petrov/devops-andersen-training/contents"
-	repo_url   string = "https://github.com/oleg1995petrov/devops-andersen-training"
-	tasks      []HW
-	updated_at time.Time
-	greeting   string = "Hi there 🖐️! I'm simple but a useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
+	api_url  string = "https://api.github.com/repos/oleg1995petrov/devops-andersen-training/contents"
+	repo_url string = "https://github.com/oleg1995petrov/devops-andersen-training"
+	greeting string = "Hi there 🖐️! I'm simple but a useful bot 🧑‍💻. I was made with ❤️ by @by_ventz.\n\n" +
 		"☝️ At the top you can see my commands. Type \"/help\" to see a tip again."
 	help_msg string = "Type /git to receive the course repository address.\n" +
 		"Type /tasks to see a list with tasks done.\n" +
@@ -27,6 +25,8 @@ var (
 	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
 	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
 		"Type \"/help\" to see a tip."
+	tasks      []HW
+	updated_at time.Time
 )
 
 type HW struct {
