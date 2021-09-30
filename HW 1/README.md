@@ -95,7 +95,7 @@ Today I've refactored and optimized the script. Also I continue to learn Go lang
 
 
 
-[flask_app]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%202
+[flask_app]: https://github.com/oleg1995petrov/flask-app-for-devops-course
 [hw2]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%202
 [hw3]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%203
 [hw4]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%204
