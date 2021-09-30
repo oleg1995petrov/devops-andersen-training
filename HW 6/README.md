@@ -1,9 +1,9 @@
 # Homework overview
 
 Build a docker image for my [Flask app][flask_app].
-  * The app listens only 8080 port.
+  * The app listens to only 8080 port.
   * The lighter in terms of image size it is - the more points I'll get.
-  * The one who build the smallest image gets even more points.
+  * The one who will build the smallest image will get even more points.
 
 ## Requirements
   
