@@ -2,7 +2,7 @@
 
 ## Overview
 1. I have to create a new repository in [Github][github] with a README file. I need to write several sentences about myself, three reasons why I am interested in that [course][course] and three things what I expect from it in that file.
-2. Also every new homework have to be located at itself own directory and have itself own README file.
+2. Also every new homework has to be located at itself own directory and have itself own README file.
 3. And the last but not least, since August 30 I have to blog about everything I will learn directly or indirectly related to the [course][course].
 
 [github]: https://github.com/
