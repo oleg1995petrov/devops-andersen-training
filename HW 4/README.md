@@ -1,4 +1,4 @@
-# Project overview
+# Homework overview
 
 Write a functional telegram bot on Go language that has at least 3 commands:  
   * **Git** - returns the course repository address.
