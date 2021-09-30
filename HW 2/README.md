@@ -1,6 +1,7 @@
-# Homework 2 overview
+# Homework overview
 
-1. Need to create and deploy to Debian 10 virtual machine (hereinafter VM) service is written in [Flask][flask] via Ansible playbook. 
+1. Need to create and deploy to Debian 10 virtual machine (hereinafter VM) service
+   is written in [Flask][flask] via Ansible playbook: 
   * The service listens at least on port 80 (443 as an option). 
   * The service accepts GET & POST methods.
   * The service should receive `json` object and return strings in the following manner:
