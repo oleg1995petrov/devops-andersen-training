@@ -1,6 +1,6 @@
 # Homework overview
 
-* Transform the next one line command to nice script:
+* Transform the next one-line command to a nice script:
 
   ```bash
   netstat -tunapl | awk '/firefox/ {print $5}' | cut -d: -f1 | sort | uniq -c | sort | tail -n5 | \
@@ -12,21 +12,21 @@
 * A user has to manage the number of output lines
 * There must be an opportunity to see other connection states
 * The script has to output understandable error messages
-* The script shouldn't depend on start up privileges and output any warnings
-* The script outputs the number of connections to each organizations
-* The script allows to receive other data form `whois` output
-* The script is able to work with `ss`
+* The script shouldn't depend on startup privileges and output any warnings
+* The script outputs the number of connections to each organization
+* The script allows receiving other data from `whois` output
+* The script can work with `ss`
 
 ## Solution
 
-The script `script.sh` accepts:  
+The script (`script.sh`) accepts:  
   * positional argument - PID or process name  
   * optional arguments:  
-    * `-n` or `--num-lines` - the maximum number of lines that will be outputted if it is specifed otherwise -> 5.
+    * `-n` or `--num-lines` - the maximum number of lines that will be outputted if it is specified otherwise -> 5.
     * `-e` or `--extend` - displays additional information about organizations.
       Accepts one or more following fields separated by space: "updated", "country", "city", "address".
 
-## Requiremnets
+## Requirements
 
 * Python 3
 
