@@ -71,7 +71,7 @@
     If you have no rsa keys yet, first install a cuple:
 
     ```bash
-    ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa 
+    ssh-keygen -t rsa -f /home/[your username]/.ssh/id_rsa
     ```
 
     After that copy your **pub** key as was written above.
@@ -101,9 +101,7 @@
     ansible-galaxy collection install community.crypto
     ```
 
-8. Start the playbook:
-
-    At the root directory execute:
+8. Start the playbook. At the root directory execute:
 
     ```bash
     ansible-playbook -i inventory -e @passwd.yml --ask-vault-pass deploy.yml
