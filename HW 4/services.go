@@ -21,9 +21,9 @@ var (
 		"Type /tasks to see a list with tasks done.\n" +
 		"Type /task#, where \"#\" is a task number, to receive " +
 		"the link to the folder with the task done.\n"
-	task_err        string = "⛔️ No no no! Homework isn't done yet."
-	unknown_cmd_err string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
-	noncmd_err      string = "🥱 I only accept several commands but I keep learning.\n" +
+	task_err   string = "⛔️ No no no! Homework isn't done yet."
+	cmd_err    string = "⁉️ I don't know that command. Type \"/help\" to know right commands."
+	noncmd_err string = "🥱 I only accept several commands but I keep learning.\n" +
 		"Type \"/help\" to see a tip."
 	tasks      []HW
 	updated_at time.Time
@@ -94,13 +94,14 @@ func generate_response_from_cmd(update tgbotapi.Update) string {
 		}
 		response += "\nCheck them out!"
 	default:
+		cmd := update.Message.Text
 		pattern := re.MustCompile("/task([0-9]+)")
-		if pattern.MatchString(update.Message.Text) {
+		if pattern.MatchString(cmd) {
 			fetch_tasks_handler()
-			task_num := pattern.FindStringSubmatch(update.Message.Text)[1]
+			task_num := pattern.FindStringSubmatch(cmd)[1]
 			response = get_task_url(task_num)
 		} else {
-			response = unknown_cmd_err
+			response = cmd_err
 		}
 	}
 	return response
