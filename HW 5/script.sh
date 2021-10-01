@@ -25,9 +25,8 @@ def get_args():
 
 def get_data_per_page(response):
     """Retrieves PRs' data from one page"""
-    data = {}
-    j = response.json()
-    for i in j:
+    data = dict()
+    for i in response.json():
         contrib = i['user']['login']
         labels = set([label['name'] for label in i['labels']])
         if contrib not in data:
@@ -87,7 +86,7 @@ def get_data_handler(response):
 def get_response(data, vars):
     """Generates the response for output"""
     header = [
-        "\n{:{}{}}".format('List of most prodactive contributors', 
+        "\n{:{}{}}".format('List of most productive contributors', 
                            '^',
                            vars['row_len']),
         "{:{}{}}".format('Contributor', 
