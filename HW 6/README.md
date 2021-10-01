@@ -14,7 +14,7 @@ Build a docker image for my [Flask app][flask_app].
 1. Run the docker image and you are done:
 
   ```bash
-  docker run --rm -p 8080:8080 oleg1995petrov/flask-andersen:v2
+  docker run --rm -p 8080:8080 oleg1995petrov/flask-andersen:v3
   ```
 
 [flask_app]: https://github.com/oleg1995petrov/flask-app-for-devops-course
