@@ -22,9 +22,9 @@ var (
 		"Type /task#, where \"#\" is a task number, to receive " +
 		"the link to the folder with the task done.\n"
 	task_err   string = "⛔️ No no no! Homework isn't done yet."
-	cmd_err    string = "⁉️ I don't know this command. Type \"/help\" to know right commands."
+	cmd_err    string = "⁉️ I don't know this command. Type /help to know right commands."
 	noncmd_err string = "🥱 I only accept several commands but I keep learning.\n" +
-		"Type \"/help\" to see a tip."
+		"Type /help to see a tip."
 	tasks      []HW
 	updated_at time.Time
 )
