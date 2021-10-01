@@ -1,7 +1,7 @@
 # Project overview
 
 * Write a script that checks if there are open pull requests for a repository.
-  An URL like "https://github.com/$user/$repo" will be passed to the script.
+  A URL like "https://github.com/$user/$repo" will be passed to the script.
 * Print the list of the most productive contributors (authors of more than 1 open PR).
 * Print the number of PRs each contributor has created with the labels.
 * Implement my own feature that I find the most attractive: anything from sorting
