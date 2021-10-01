@@ -29,11 +29,15 @@ var (
 	updated_at time.Time
 )
 
+// HW struct stores "names" and "URLs" of tasks done.
 type HW struct {
 	Name string `json:"name"`
-	Url  string `json:"html_url"`
+	URL  string `json:"html_url"`
 }
 
+// Fetch_tasks_handler fetches tasks' done data from a passed repository
+// if a slice of tasks is empty or more than thirty minutes have passed
+// since the last update.
 func fetch_tasks_handler() {
 	if len(tasks) == 0 {
 		fetch_tasks()
@@ -46,6 +50,7 @@ func fetch_tasks_handler() {
 	}
 }
 
+// Fetch_tasks fetches tasks' done data from a passed repository
 func fetch_tasks() {
 	resp, resp_err := http.Get(api_url)
 	if resp_err != nil {
@@ -62,6 +67,7 @@ func fetch_tasks() {
 	}
 }
 
+// Get_response returns a response for user's request.
 func get_response(update tgbotapi.Update) string {
 	var response string
 
@@ -73,6 +79,7 @@ func get_response(update tgbotapi.Update) string {
 	return response
 }
 
+// Generate_response_from_cmd generates a response for entered command.
 func generate_response_from_cmd(update tgbotapi.Update) string {
 	var response string
 
@@ -107,13 +114,14 @@ func generate_response_from_cmd(update tgbotapi.Update) string {
 	return response
 }
 
+// Get_task_url retrieves a URL for passed task.
 func get_task_url(task_num string) string {
 	var url string
 	task_name := fmt.Sprintf("HW %s", task_num)
 
 	for i := range tasks {
 		if tasks[i].Name == task_name {
-			url = tasks[i].Url
+			url = tasks[i].URL
 			break
 		}
 	}
