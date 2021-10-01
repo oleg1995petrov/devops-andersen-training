@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 
 
 PULL_API_URL = "https://api.github.com/repos/%s/%s/pulls"
-PATTERN = r'^(https?:\/\/)?(w{3}\.)?\w+\.\w+\/([-\w]+)\/([\w-]+)[\w/-]*?$'
+PATTERN = r'^(https?:\/\/)?(w{3}\.)?github.com\/([-\w]+)\/([\w-]+)[\w/-]*?$'
 MIN_CONTRIB_HEADER_LEN = len('Contributor') + 2
 MIN_LABELS_HEADER_LEN = len('Labels') + 2
 MIN_PULLS_HEADER_LEN = len('Pull requests') + 2
