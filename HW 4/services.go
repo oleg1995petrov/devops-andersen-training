@@ -79,7 +79,7 @@ func get_response(update tgbotapi.Update) string {
 	return response
 }
 
-// Generate_response_from_cmd generates a response for entered command.
+// Generate_response_from_cmd generates a response for an entered command.
 func generate_response_from_cmd(update tgbotapi.Update) string {
 	var response string
 
