@@ -35,8 +35,8 @@ type HW struct {
 	URL  string `json:"html_url"`
 }
 
-// Fetch_tasks_handler fetches tasks' done data from a passed repository
-// if a slice of tasks is empty or more than thirty minutes have passed
+// Fetch_tasks_handler fetches tasks' done data from the passed repository
+// if the slice of tasks is empty or more than thirty minutes have passed
 // since the last update.
 func fetch_tasks_handler() {
 	if len(tasks) == 0 {
@@ -50,7 +50,7 @@ func fetch_tasks_handler() {
 	}
 }
 
-// Fetch_tasks fetches tasks' done data from a passed repository
+// Fetch_tasks fetches tasks' done data from the passed repository
 func fetch_tasks() {
 	resp, resp_err := http.Get(api_url)
 	if resp_err != nil {
@@ -114,7 +114,7 @@ func generate_response_from_cmd(update tgbotapi.Update) string {
 	return response
 }
 
-// Get_task_url retrieves a URL for passed task.
+// Get_task_url retrieves a URL for a passed task.
 func get_task_url(task_num string) string {
 	var url string
 	task_name := fmt.Sprintf("HW %s", task_num)
