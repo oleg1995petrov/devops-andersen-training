@@ -13,7 +13,11 @@
 ## Solution
 
 The script (`script.sh`) accepts:  
-  * positional argument - Github repository address.
+  * positional argument - Github repository address 
+  * optional arguments:
+    * `-t` or `--access-token` - Your Github access token. 
+    * `-p` or `--pages-number` - The number of data pages to be analyzed 
+      (one page contents up to 100 opened pull requests).
 
 ## Requirements 
 
@@ -34,5 +38,8 @@ The script (`script.sh`) accepts:
 
     # or 
     ./script.sh github.com/{owner}/{repository}
+
+    # or 
+    ./script.sh {owner}/{repository}
 
     ```
