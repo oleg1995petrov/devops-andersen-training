@@ -15,9 +15,10 @@
 The script (`script.sh`) accepts:  
   * positional argument - Github repository address 
   * optional arguments:
-    * `-t` or `--access-token` - Your Github access token. 
-    * `-p` or `--pages-number` - The number of data pages to be analyzed 
+    * `-t` or `--access-token` - your Github access token. 
+    * `-p` or `--pages-number` - the number of data pages to parse 
       (one page contents up to 100 opened pull requests).
+      Default value is 1 (up to 100 PRs)
 
 ## Requirements 
 
@@ -34,7 +35,7 @@ The script (`script.sh`) accepts:
 2. Start the script:
     
     ```bash
-    ./script.sh https://github.com/{owner}/{repository}
+    ./script.sh https://www.github.com/{owner}/{repository}
 
     # or 
     ./script.sh github.com/{owner}/{repository}

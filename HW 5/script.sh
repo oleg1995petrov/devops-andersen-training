@@ -13,7 +13,6 @@ MIN_CONTRIB_HEADER_LEN = len('Contributor') + 2
 MIN_LABELS_HEADER_LEN = len('Labels') + 2
 MIN_PULLS_HEADER_LEN = len('Pull requests') + 2
 NUM_HEADERS = 3
-LIMIT = 1
 
 
 def get_args():
@@ -21,7 +20,8 @@ def get_args():
     parser = ArgumentParser(usage='./script.sh [Github repository address]')
     parser.add_argument('repo_url', help='Github repository address.')
     parser.add_argument('-t', '--access-token', help='Github access token.')
-    parser.add_argument('-p', '--pages-number', type=int, help='Number of pages to retrieve.')
+    parser.add_argument('-p', '--pages-number', type=int, default=1, 
+                        help='The number of pages to parse.')
     args = parser.parse_args()
     return args
 
@@ -222,11 +222,8 @@ def get_response(data, data_filtered, vars):
 def main():
     args = get_args()
     repo_url = args.repo_url
-    limit = args.pages_number
-
-    if limit:
-        global LIMIT
-        LIMIT = limit
+    global LIMIT
+    LIMIT = args.pages_number
 
     match = re.match(PATTERN, repo_url)
     if not match:
@@ -236,18 +233,17 @@ def main():
               'and its name.❗')
         return 
 
-    pull_url = API_URL % (match.group(4), match.group(5))
     params = {
         'state': 'open',
         'per_page': 100,
         'page': 1
     }
-
     token = args.access_token
     if token:
         global HEADERS
         HEADERS['Authorization'] = 'token %s' % token
 
+    pull_url = API_URL % (match.group(4), match.group(5))
     resp = requests.get(pull_url, params, headers=HEADERS)
     if resp.status_code != 200:
         print("❗Make sure you've passed "
@@ -259,7 +255,7 @@ def main():
     data, data_filtered, vars = get_data_handler(resp)
     response = get_response(data, data_filtered, vars)
     print('\n'.join(response))
-    print('Left ' + LEFT_REQUESTS + ' requests.')
+    print('Left ' + LEFT_REQUESTS + ' requests')
 
 
 if __name__ == '__main__':
