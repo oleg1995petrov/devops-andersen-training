@@ -18,7 +18,7 @@ The script (`script.sh`) accepts:
     * `-t` or `--access-token` - your Github access token. 
     * `-p` or `--pages-number` - the number of data pages to parse 
       (one page contents up to 100 opened pull requests).
-      Default value is 1 (up to 100 PRs)
+      Default value is 1 - up to 100 PRs.
 
 ## Requirements 
 
