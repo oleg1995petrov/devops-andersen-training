@@ -28,7 +28,7 @@ The script (`script.sh`) accepts:
 
 ## Requirements
 
-* Python 3
+* Python 3.6+
 
 ## The User Guide
 
