@@ -57,12 +57,11 @@ def get_data(response):
         counter +=1
 
     data = dict(sorted(
-        dict(filter(
-            lambda x: x[1]['pulls'], 
-            data.items()
-        )).items(),
+        data.items(),
         key=lambda x: x[1]['pulls'],
-        reverse=True))
+        reverse=True
+    ))
+    
     data_filtered = dict(sorted(
         dict(filter(
             lambda x: x[1]['pulls'] > 1, 
