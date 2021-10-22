@@ -88,7 +88,26 @@ and written a minimal viable script that retrieves the necessary data, transform
 in a structured form.
 
 `Sep 20, 2021`  
-Today I've refactored and optimized the script. Also, I continue to learn the Go language.
+Today I've got acquainted with an IaaC concept and the most famous and popular cloud providers 
+that allow to use them for infrastructure building. Also, I've refactored and optimized the script. 
+[homework 5][hw5]
+
+`Sep 21, 2021`  
+Today I've registered at Amazon cloud and started to practice with it services.
+
+`Sep 22, 2021`  
+Today I've got acquainted with Terraform and plunged deeper into Amazon cloud services.
+
+`Sep 23, 2021`  
+Today I'va practiced with terraform and Github, Amazon providers. I've done several simple tasks.
+
+`Sep 24, 2021`  
+Today I've learned terraform syntax, functions.
+
+`Sep 25, 2021` 
+Today I've worked with Terraform and AWS. I've written several basic resources, deployed infrastructure, 
+and destroy it. I'll continue to learn terraform and AWS cloud to pass the exam.
+
 
 [flask_app]: https://github.com/oleg1995petrov/flask-app-for-devops-course
 [hw2]: https://github.com/oleg1995petrov/devops-andersen-training/tree/master/HW%202
