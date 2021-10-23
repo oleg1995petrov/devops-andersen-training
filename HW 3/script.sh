@@ -127,7 +127,7 @@ def main():
 
     if netstat_exists:
         cmd1 = Popen(('sudo', 'netstat', '-tunapl'), stdout=PIPE)
-        cmd2 = Popen(('awk', f'/{args.process}/ ' + '{print $5}'), 
+        cmd2 = Popen(('awk', f'/{args.process}/ {print $5}'), 
                        stdin=cmd1.stdout, stdout=PIPE)
     else:
         cmd1 = Popen(('sudo', 'ss', '-tunap'), stdout=PIPE)
