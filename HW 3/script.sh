@@ -169,8 +169,10 @@ def main():
         if extra_fields:
             add_extra_info(organizations, extra_fields, org_data, data)
 
-    data = dict(sorted(data.items(), 
-                key=lambda x: (x[0], x[1]['connections'])))
+    data = dict(sorted(
+        data.items(), 
+        key=lambda x: (x[0], x[1]['connections'])
+    ))
 
     vars['org_max_len'] = (max([len(org) for org in data.keys()]) 
                            if data else len('Organization'))
