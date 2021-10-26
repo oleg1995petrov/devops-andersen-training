@@ -104,7 +104,7 @@
     ansible-galaxy collection install community.crypto
     ```
 
-8. Start the playbook. At the root directory execute:
+8. Start the playbook. At the homework root directory execute:
 
     ```bash
     ansible-playbook -i inventory -e @passwd.yml --ask-vault-pass deploy.yml
