@@ -1,5 +1,5 @@
 # Project overview
-It's the DevOps course from the Andersen company.
+It's the repository for the DevOps course from the Andersen company.
 I will have been learning this direction for two months and I will try to do my best.
 
 ## About me
