@@ -36,7 +36,7 @@ The script (`script.sh`) accepts:
 
   ```bash
   git clone https://github.com/oleg1995petrov/devops-andersen-training.git && cd 'devops-andersen-training/HW 3'
-    ```
+  ```
 2. Start the script:
     
   ```bash
