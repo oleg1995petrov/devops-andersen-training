@@ -19,11 +19,12 @@ RUN apk update \
        --add-data "templates/:templates/" \
        --add-data "static/:static/" \
        --add-data "services.py:services.py" \
-       -F flask_app.py \
-    && staticx --strip /test/dist/flask_app /test/app \
+       -F app.py \
+    && staticx --strip /test/dist/app /test/app \
     && mkdir /test/tmp
 
 FROM scratch
 COPY --from=py_builder /test/tmp /tmp
 COPY --from=py_builder /test/app /
+EXPOSE 5000
 CMD ["./app"]  
