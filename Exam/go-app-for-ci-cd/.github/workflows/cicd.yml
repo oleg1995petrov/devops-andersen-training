@@ -1,0 +1,278 @@
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      # - '.github/workflows/*'
+      - '.gitignore'
+      - '*.md'
+      - '*.png'
+
+env:
+  IMAGE_TAG: ${{github.sha}}
+
+jobs: 
+  snyk:
+    runs-on: ubuntu-latest
+    env:
+      ACTION: Snyk job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: clarkio/snyk-cli-action@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      
+      - name: Send telegram notification if failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+
+            *Action*: ${{ env.ACTION }}
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+
+            *Commit message*: ${{ github.event.commits[0].message }}
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: "markdown"
+          disable_web_page_preview: true
+
+  golangci:
+    needs: snyk
+    runs-on: ubuntu-latest
+    env:
+      ACTION: Code linting
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: ${{ env.ACTION }}
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+    
+      - name: Send telegram notification if failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+
+            *Action*: ${{ env.ACTION }}
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+
+            *Commit message*: ${{ github.event.commits[0].message }}
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: "markdown"
+          disable_web_page_preview: true
+
+  tests:
+    needs: golangci
+    strategy:
+      matrix:
+        go-version: [1.16.x, 1.17.x]
+    runs-on: ubuntu-latest
+    env:
+      ACTION: Run tests
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: ${{ env.ACTION }}
+        run: go test ./...
+        
+      - name: Send telegram notifications if failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+
+            *Action*: ${{ env.ACTION }}
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+
+            *Commit message*: ${{ github.event.commits[0].message }}
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: "markdown"
+          disable_web_page_preview: true
+
+  aws-ecr-create:
+    needs: tests
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      ACTION: Create repo if it doesn`t exist
+    defaults:
+      run:
+        working-directory: ecr
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: oleg1995petrov/aws-infrastructure-for-go-app
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform format
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform init
+        run: terraform init
+      
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+
+      - name: Send telegram notification if failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+            *Action*: ${{ env.ACTION }}
+
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+            *Commit message*: ${{ github.event.commits[0].message }}
+
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: "markdown"
+          disable_web_page_preview: true
+
+  aws-ecr-deploy:
+    needs: aws-ecr-create
+    runs-on: ubuntu-latest
+    env:
+      ACTION: Build & deploy image to ECR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        id: aws_credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Log into Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: go
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      - name: Send telegram notification if failure
+        uses: appleboy/telegram-action@master
+        if: ${{ failure() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+            *Action*: ${{ env.ACTION }}
+
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+            *Commit message*: ${{ github.event.commits[0].message }}
+
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: "markdown"
+          disable_web_page_preview: true
+
+  terraform:
+    needs: aws-ecr-deploy
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      ACTION: Deploy infrastructure
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: oleg1995petrov/aws-infrastructure-for-go-app
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform format
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform init
+        run: terraform init
+      
+      - name: Terraform validate
+        run: terraform validate -no-color
+
+      - name: Terraform plan
+        id: plan
+        run: terraform plan -no-color -var="image_tag=$IMAGE_TAG"
+        continue-on-error: true
+
+      - name: Terraform plan status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve -var="image_tag=$IMAGE_TAG"
+      
+      - name: Send telegram notification
+        uses: appleboy/telegram-action@master
+        if: ${{ always() }} 
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            *Repository*: ${{ github.repository }}
+            *Action*: ${{ env.ACTION }}
+
+            *Status*: ${{ job.status }}
+            *Author*: ${{ github.actor }}
+            *Commit message*: ${{ github.event.commits[0].message }}
+
+            *Link*: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          format: markdown
+          disable_web_page_preview: true
