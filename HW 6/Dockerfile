@@ -26,5 +26,5 @@ RUN apk update \
 FROM scratch
 COPY --from=py_builder /test/tmp /tmp
 COPY --from=py_builder /test/app /
-EXPOSE 5000
+EXPOSE 8080
 CMD ["./app"]  
