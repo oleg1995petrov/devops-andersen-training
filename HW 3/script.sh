@@ -65,16 +65,18 @@ def add_extra_info(organizations, fields, data, storage):
 def get_response(data, vars, header_content):
     """Generates response with stored data"""
     if not data:
-        return ["\n{:{}{}}".format('List of organizations', '^', 
-                 vars['row_len']),
-                 "{:{}{}}".format('Organization', '^', 
-                 vars['org_header_len']) + '|' + 
-                 "{:{}{}}".format('Connections', '^', 
-                 vars['conn_header_len']),
-                 ("{:{}{}{}}".format('', '-', '^', 
-                 vars['org_header_len']) + '+' + 
-                 "{:{}{}{}}".format('', '-', '^', 
-                 vars['conn_header_len']))]
+        return [
+            "\n{:{}{}}".format('List of organizations', '^', 
+            vars['row_len']),
+            "{:{}{}}".format('Organization', '^', 
+            vars['org_header_len']) + '|' + 
+            "{:{}{}}".format('Connections', '^', 
+            vars['conn_header_len']),
+            ("{:{}{}{}}".format('', '-', '^', 
+            vars['org_header_len']) + '+' + 
+            "{:{}{}{}}".format('', '-', '^', 
+            vars['conn_header_len']))
+        ]
 
     headers = ['organization', 'connections'] + vars['extra_fields']
     response = ["\n{:{}{}}".format('List of organizations', '^', 
@@ -127,7 +129,7 @@ def main():
 
     if netstat_exists:
         cmd1 = Popen(('sudo', 'netstat', '-tunapl'), stdout=PIPE)
-        cmd2 = Popen(('awk', f'/{args.process}/ {print $5}'), 
+        cmd2 = Popen(('awk', f'/{args.process}/' '{print $5}'), 
                        stdin=cmd1.stdout, stdout=PIPE)
     else:
         cmd1 = Popen(('sudo', 'ss', '-tunap'), stdout=PIPE)
@@ -144,8 +146,7 @@ def main():
     cmd5.stdout.close()
     cmd7 = Popen(('tail', '-n+1'), stdin=cmd6.stdout, stdout=PIPE)
     cmd6.stdout.close()
-    cmd8 = Popen(('grep', '-oP', '(\d+\.){3}\d+'), stdin=cmd7.stdout, 
-                  stdout=PIPE)
+    cmd8 = Popen(('grep', '-oP', '(\d+\.){3}\d+'), stdin=cmd7.stdout, stdout=PIPE)
     cmd7.stdout.close()
     cmd_res = cmd8.communicate()[0]
     cmd8.stdout.close()
@@ -155,8 +156,7 @@ def main():
 
     for ip in ip_array:
         extra_fields = vars['extra_fields']
-        org_data = Popen(('whois', ip), stdout=PIPE, 
-                          encoding='utf-8').communicate()[0]
+        org_data = Popen(('whois', ip), stdout=PIPE, encoding='utf-8').communicate()[0]
 
         organizations = get_organizations(org_data)
         if organizations:
@@ -174,8 +174,9 @@ def main():
         key=lambda x: (x[0], x[1]['connections'])
     ))
 
-    vars['org_max_len'] = (max([len(org) for org in data.keys()]) 
-                           if data else len('Organization'))
+    vars['org_max_len'] = (max(
+        [len(org) for org in data.keys()]) if data else len('Organization')
+    )
     vars['org_header_len'] = vars['org_max_len'] + 2
     vars['conn_header_len'] = len('Connections') + 2
     vars['org_col_len'] = vars['org_header_len'] - 1
@@ -193,31 +194,48 @@ def main():
             if 'updated' in extra_fields else 0)
         vars['country_header_len'] = (len('Country') + 2 
             if 'country' in extra_fields else 0)
-        vars['city_header_len'] = (max([len(v['city']) for v in 
-            data.values()]) + 2 if 'city' in extra_fields else 0)
-        vars['address_header_len'] = (max([len(v['address']) for v in
-            data.values()]) + 2 if 'address' in extra_fields else 0)
-        vars['row_len'] = (vars['org_header_len'] + vars['conn_header_len'] + 
-            vars['updated_header_len'] + vars['country_header_len'] + 
-            vars['city_header_len'] + vars['address_header_len'])
+        vars['city_header_len'] = (max(
+            [len(v['city']) for v in data.values()]) + 2 
+            if 'city' in extra_fields else 0)
+        vars['address_header_len'] = (max(
+            [len(v['address']) for v in data.values()]) + 2 
+            if 'address' in extra_fields else 0)
+        vars['row_len'] = (
+            vars['org_header_len'] + 
+            vars['conn_header_len'] + 
+            vars['updated_header_len'] + 
+            vars['country_header_len'] + 
+            vars['city_header_len'] + 
+            vars['address_header_len']
+        )
         vars['updated_col_len'] = vars['updated_header_len'] - 1
         vars['country_col_len'] = vars['country_header_len'] - 1 
         vars['city_col_len'] = vars['city_header_len'] - 1
         vars['address_col_len'] = vars['address_header_len'] - 1
 
-        header_content.update(
-            {'updated': '{:{}{}}'.format('Updated', '^', 
-                         vars['updated_header_len']),
-             'country': '{:{}{}}'.format('Country', '^', 
-                         vars['country_header_len']),
-             'city': '{:{}{}}'.format('City', '^', 
-                         vars['city_header_len']),
-             'address': '{:{}{}}'.format('Address', '^', 
-                         vars['address_header_len'])}
+        header_content.update({
+            'updated': '{:{}{}}'.format(
+                'Updated', 
+                '^', 
+                vars['updated_header_len']),
+            'country': '{:{}{}}'.format(
+                'Country', 
+                '^', 
+                vars['country_header_len']),
+            'city': '{:{}{}}'.format(
+                'City', 
+                '^', 
+                vars['city_header_len']),
+            'address': '{:{}{}}'.format(
+                'Address', 
+                '^', 
+                vars['address_header_len'])}
         )
     else:
-        vars['row_len'] = (vars['org_header_len'] + 
-                          vars['conn_header_len'] + 1)
+        vars['row_len'] = (
+            vars['org_header_len'] + 
+            vars['conn_header_len'] + 1
+        )
     
     response = get_response(data, vars, header_content)[: 3 + vars['num_lines']]
     response += [f'({len(response) - 3} rows)\n']
