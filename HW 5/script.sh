@@ -35,8 +35,10 @@ def get_data_per_page(response):
         contrib = i['user']['login']
         labels = set([label['name'] for label in i['labels']])
         if contrib not in data:
-            data[contrib] = {'pulls': 1,
-                             'labels': labels}
+            data[contrib] = {
+                'pulls': 1,
+                'labels': labels
+            }
         else:
             data[contrib]['pulls'] += 1
             data[contrib]['labels'].union(labels)
@@ -65,8 +67,8 @@ def get_data(response):
     data_filtered = dict(sorted(
         dict(filter(
             lambda x: x[1]['pulls'] > 1, 
-            data.items()
-        )).items(),
+            data.items())
+        ).items(),
         key=lambda x: x[1]['pulls'],
         reverse=True))
     return data, data_filtered
@@ -75,22 +77,24 @@ def get_data(response):
 def get_data_handler(response):
     """Receives PRs' data and generates required variables for output"""
     data, data_filtered = get_data(response)
-    contrib_header_len = (max([len(c) for c in data.keys()]) + 2 if data 
-                          else MIN_CONTRIB_HEADER_LEN)
-    contrib_header_len_filtered = (max([len(c) for c in data_filtered.keys()]) + 2 
-                                   if data_filtered else MIN_CONTRIB_HEADER_LEN)
+    contrib_header_len = (max(
+        [len(c) for c in data.keys()]) + 2 if data 
+        else MIN_CONTRIB_HEADER_LEN
+    )
+    contrib_header_len_filtered = (max(
+        [len(c) for c in data_filtered.keys()]) + 2 
+        if data_filtered else MIN_CONTRIB_HEADER_LEN
+    )
     pulls_header_len = MIN_PULLS_HEADER_LEN
     
     try:
         labels_header_len = max(
-            [sum([len(i) + 2 for i in v['labels']]
-        ) for v in data.values()])
+            [sum([len(i) + 2 for i in v['labels']]) for v in data.values()])
     except ValueError:
         labels_header_len = MIN_LABELS_HEADER_LEN
     try:
         labels_header_len_filtered = max(
-            [sum([len(i) + 2 for i in v['labels']]
-        ) for v in data_filtered.values()])
+            [sum([len(i) + 2 for i in v['labels']]) for v in data_filtered.values()])
     except ValueError:
         labels_header_len_filtered = MIN_LABELS_HEADER_LEN
         
@@ -103,10 +107,19 @@ def get_data_handler(response):
     if labels_header_len_filtered < MIN_LABELS_HEADER_LEN:
         labels_header_len_filtered = MIN_LABELS_HEADER_LEN
 
-    row_len = (contrib_header_len + pulls_header_len + 
-               labels_header_len + NUM_HEADERS)
-    row_len_filtered = (contrib_header_len_filtered + pulls_header_len + 
-               labels_header_len_filtered + NUM_HEADERS)
+    row_len = (
+        contrib_header_len + 
+        pulls_header_len + 
+        labels_header_len + 
+        NUM_HEADERS
+    )
+    row_len_filtered = (
+        contrib_header_len_filtered + 
+        pulls_header_len + 
+        labels_header_len_filtered + 
+        NUM_HEADERS
+    )
+
     vars = {
         'contrib_header_len': contrib_header_len, 
         'pulls_header_len': pulls_header_len,
@@ -122,69 +135,101 @@ def get_data_handler(response):
 def get_response(data, data_filtered, vars):
     """Generates the response for output"""
     header_filtered = [
-        "\n{:{}{}}".format('List of most productive contributors', 
-                           '^',
-                           vars['row_len']),
-        "{:{}{}}".format('Contributor', 
-                         '^',
-                         vars['contrib_header_len_filtered']) + 
+        "\n{:{}{}}".format(
+            'List of most productive contributors', 
+            '^',
+            vars['row_len']
+        ),
+        "{:{}{}}".format(
+            'Contributor', 
+            '^',
+            vars['contrib_header_len_filtered']
+        ) + 
         '|' +
-        "{:{}{}}".format('Pull requests', 
-                         '^',
-                         vars['pulls_header_len']) +
+        "{:{}{}}".format(
+            'Pull requests', 
+            '^',
+            vars['pulls_header_len']
+        ) +
         '|' +
-        "{:{}{}}".format('Labels',
-                         '^',
-                         vars['labels_header_len_filtered'])
+        "{:{}{}}".format(
+            'Labels',
+            '^',
+            vars['labels_header_len_filtered']
+        )
     ]
+
     border_filtered = [
-        "{:{}{}{}}".format('', 
-                           '-', 
-                           '^', 
-                           vars['contrib_header_len_filtered']) + 
+        "{:{}{}{}}".format(
+            '', 
+            '-', 
+            '^', 
+            vars['contrib_header_len_filtered']
+        ) + 
         '+' +
-        "{:{}{}{}}".format('', 
-                           '-', 
-                           '^', 
-                           vars['pulls_header_len']) +
+        "{:{}{}{}}".format(
+            '', 
+            '-', 
+            '^', 
+            vars['pulls_header_len']
+        ) +
         '+' +
-        "{:{}{}{}}".format('',
-                           '-',
-                           '^',
-                           vars['labels_header_len_filtered'])
+        "{:{}{}{}}".format(
+            '',
+            '-',
+            '^',
+            vars['labels_header_len_filtered']
+        )
     ]
+
     header = [
-        "\n{:{}{}}".format('List of all contributors', 
-                           '^',
-                           vars['row_len']),
-        "{:{}{}}".format('Contributor', 
-                         '^',
-                         vars['contrib_header_len']) + 
+        "\n{:{}{}}".format(
+            'List of all contributors', 
+            '^',
+            vars['row_len']
+        ),
+        "{:{}{}}".format(
+            'Contributor', 
+            '^',
+            vars['contrib_header_len']
+        ) + 
         '|' +
-        "{:{}{}}".format('Pull requests', 
-                         '^',
-                         vars['pulls_header_len']) +
+        "{:{}{}}".format(
+            'Pull requests', 
+            '^',
+            vars['pulls_header_len']
+        ) +
         '|' +
-        "{:{}{}}".format('Labels',
-                         '^',
-                         vars['labels_header_len'])
+        "{:{}{}}".format(
+            'Labels',
+            '^',
+            vars['labels_header_len']
+        )
     ]
+
     border = [
-        "{:{}{}{}}".format('', 
-                           '-', 
-                           '^', 
-                           vars['contrib_header_len']) + 
+        "{:{}{}{}}".format(
+            '', 
+            '-', 
+            '^', 
+            vars['contrib_header_len']
+        ) + 
         '+' +
-        "{:{}{}{}}".format('', 
-                           '-', 
-                           '^', 
-                           vars['pulls_header_len']) +
+        "{:{}{}{}}".format(
+            '', 
+            '-', 
+            '^', 
+            vars['pulls_header_len']
+        ) +
         '+' +
-        "{:{}{}{}}".format('',
-                           '-',
-                           '^',
-                           vars['labels_header_len'])
+        "{:{}{}{}}".format(
+            '',
+            '-',
+            '^',
+            vars['labels_header_len']
+        )
     ]
+
     pulls_row_len = vars['pulls_header_len'] - 1
 
     if not data_filtered:
@@ -194,9 +239,13 @@ def get_response(data, data_filtered, vars):
         labeles_row_len_filtered = vars['labels_header_len_filtered'] - 1
         body = list()
         for k, v in data_filtered.items():
-            row = " {:<{}}".format(k, contrib_row_len_filtered) + '|'
-            row += " {:<{}}".format(v['pulls'], pulls_row_len) + '|'
-            row += " {:<{}}".format(', '.join(v['labels']), labeles_row_len_filtered)
+            row = (
+                " {:<{}}".format(k, contrib_row_len_filtered) +
+                "|"
+                " {:<{}}".format(v['pulls'], pulls_row_len) + 
+                "|" +
+                " {:<{}}".format(', '.join(v['labels']), labeles_row_len_filtered)
+            )
             body.append(row)
         response = header_filtered + border_filtered + body
     response_len = len(response)
@@ -209,9 +258,12 @@ def get_response(data, data_filtered, vars):
         labeles_row_len = vars['labels_header_len'] - 1
         body = list()
         for k, v in data.items():
-            row = " {:<{}}".format(k, contrib_row_len) + '|'
-            row += " {:<{}}".format(v['pulls'], pulls_row_len) + '|'
-            row += " {:<{}}".format(', '.join(v['labels']), labeles_row_len)
+            row = (
+                " {:<{}}".format(k, contrib_row_len) + 
+                "|" + 
+                " {:<{}}".format(v['pulls'], pulls_row_len) + "|" +
+                " {:<{}}".format(', '.join(v['labels']), labeles_row_len)
+            )
             body.append(row)
         response += header + border + body
     response += [f'({len(response) - response_len - 4} rows)\n']
@@ -226,10 +278,12 @@ def main():
 
     match = re.match(PATTERN, repo_url)
     if not match:
-        print('❗Check the repository address. The address '
-              'has to contain at least a Github repository '
-              'including the Github domain, repository owner '
-              'and its name.❗')
+        print(
+            '❗Check the repository address. The address '
+            'has to contain at least a Github repository '
+            'including the Github domain, repository owner '
+            'and its name.❗'
+        )
         return 
 
     params = {
@@ -237,18 +291,22 @@ def main():
         'per_page': 100,
         'page': 1
     }
+    
     token = args.access_token
     if token:
         global HEADERS
         HEADERS['Authorization'] = 'token %s' % token
 
     pull_url = API_URL % (match.group(4), match.group(5))
+
     resp = requests.get(pull_url, params, headers=HEADERS)
     if resp.status_code != 200:
-        print("❗Make sure you've passed "
-              "an existent repository address. "
-              "Note private repositories are unreachable. Also, you could "
-              "have exhausted the entire supply of requests❗")
+        print(
+            "❗Make sure you've passed "
+            "an existent repository address. "
+            "Note private repositories are unreachable. Also, you could "
+            "have exhausted the entire supply of requests❗"
+        )
         return
 
     data, data_filtered, vars = get_data_handler(resp)
